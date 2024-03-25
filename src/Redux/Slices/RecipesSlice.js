@@ -24,6 +24,7 @@ export const RecipesSlice = createSlice({
 		isError: false,
 		errorMessage: "",
 	},
+	// Aggiungi reducers qui
 	reducers: {},
 	extraReducers: (builder) => {
 		builder

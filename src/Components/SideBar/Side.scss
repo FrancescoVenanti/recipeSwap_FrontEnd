@@ -1,0 +1,52 @@
+.sidebar {
+	background-color: rgb(238, 236, 218);
+	color: #fff;
+	position: fixed;
+	top: 50%;
+	transform: translate(0, -50%);
+	left: 0.5rem;
+	z-index: 100;
+	padding-top: 50px;
+	transition: width 1s;
+	text-wrap: nowrap;
+	overflow-x: hidden;
+
+	a {
+		color: #fff;
+		text-decoration: none;
+		transition: all 1s;
+		transition: color 0.3s;
+	}
+	a:hover {
+		background-color: white;
+		color: rgb(60, 175, 22);
+		transition: all 0.3s;
+		border-radius: 0.5rem 0 0 0.5rem;
+	}
+	.sideProfile {
+		background-color: black;
+		color: #fff;
+		margin-inline-end: -0.5rem;
+		border: none;
+		transition: all 0.3s;
+		border-radius: 0.5rem 0 0 0.5rem;
+	}
+	.sideProfile:hover {
+		background-color: white;
+		color: rgb(60, 175, 22);
+		transform: scale(1.01);
+		transition: all 0.3s;
+	}
+}
+
+.sideOpen {
+	height: 80vh;
+	width: 300px;
+}
+.sideClose {
+	height: 80vh;
+	width: 80px;
+}
+.cursor-pointer {
+	cursor: pointer;
+}
