@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // Async thunk per la registrazione
 export const registerUser = createAsyncThunk("auth/register", async (userData, thunkAPI) => {
 	try {
-		const response = await fetch("https://localhost:44380/api/Users/Register", {
+		const response = await fetch("https://localhost:7026/api/Users/Register", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -24,14 +24,14 @@ export const registerUser = createAsyncThunk("auth/register", async (userData, t
 	}
 });
 
-export const loginUser = createAsyncThunk("auth/login", async ({ username, password }, { rejectWithValue }) => {
+export const loginUser = createAsyncThunk("auth/login", async ({ username, pswHash }, { rejectWithValue }) => {
 	try {
-		const response = await fetch("https://localhost:44380/api/Users/Login", {
+		const response = await fetch("https://localhost:7026/api/Users/Login", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({ username, password }),
+			body: JSON.stringify({ username, pswHash }),
 		});
 
 		let data = await response.json();
@@ -51,7 +51,7 @@ export const loginUser = createAsyncThunk("auth/login", async ({ username, passw
 
 export const logoutUser = createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
 	try {
-		const response = await fetch("https://localhost:44380/api/Users/Logout", {
+		const response = await fetch("https://localhost:7026/api/Users/Logout", {
 			method: "post",
 			headers: {
 				"Content-Type": "application/json",
@@ -111,13 +111,13 @@ export const authSlice = createSlice({
 			.addCase(loginUser.fulfilled, (state, action) => {
 				state.isLoading = false;
 				state.isSuccess = true;
-				state.user = action.payload.user; // Assumi che l'action ritorni i dettagli dell'utente
-				state.token = action.payload.token;
+				state.user = action.payload; // Assumi che l'action ritorni i dettagli dell'utente
+				state.token = action.payload;
 			})
 			.addCase(loginUser.rejected, (state, action) => {
 				state.isLoading = false;
 				state.isError = true;
-				state.message = action.payload.message ? action.payload.message : "Login fallito";
+				state.message = action.payload ? action.payload : "Login fallito";
 			})
 			.addCase(logoutUser.fulfilled, (state) => {
 				state.user = null;

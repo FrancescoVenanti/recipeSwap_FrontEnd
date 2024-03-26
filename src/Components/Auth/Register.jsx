@@ -7,6 +7,7 @@ const Register = () => {
 		Username: "",
 		Email: "",
 		PswHash: "",
+		confirmPsw: "",
 		FirstName: "",
 		LastName: "",
 		Locality: "",
@@ -22,6 +23,7 @@ const Register = () => {
 			Username: user.Username,
 			Email: user.Email,
 			PswHash: user.PswHash,
+			confirmPsw: user.confirmPsw,
 			FirstName: user.FirstName,
 			LastName: user.LastName,
 			Locality: user.Locality,
@@ -33,7 +35,7 @@ const Register = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit} className="d-flex flex-column align-items-center">
 			<input
 				type="email"
 				value={registerUser.Email}
@@ -46,6 +48,13 @@ const Register = () => {
 				value={user.PswHash}
 				onChange={(e) => setUser({ ...user, PswHash: e.target.value })}
 				placeholder="Password"
+				required
+			/>
+			<input
+				type="password"
+				value={user.confirmPsw}
+				onChange={(e) => setUser({ ...user, confirmPsw: e.target.value })}
+				placeholder="Confirm Password"
 				required
 			/>
 			<input

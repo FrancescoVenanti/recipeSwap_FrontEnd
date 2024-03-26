@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchRecipes = createAsyncThunk("recipes/fetchRecipes", async (_, { rejectWithValue }) => {
 	try {
-		const response = await fetch("https://localhost:44380/api/Recipes");
+		const response = await fetch("https://localhost:7026/api/Recipes");
 		const recipes = await response.json();
 		if (response.ok) {
 			console.log(recipes);
