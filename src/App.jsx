@@ -1,5 +1,5 @@
-import "./App.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.scss";
 import Authentication from "./Components/Auth/Authentication";
 import Recipes from "./Components/MainPage/Recipes/Recipes";
 import SidebarComponent from "./Components/SideBar/SidebarComponent";
