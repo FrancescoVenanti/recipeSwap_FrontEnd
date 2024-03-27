@@ -1,26 +1,25 @@
-import { useDispatch, useSelector } from "react-redux";
-import { fetchRecipes } from "../../../Redux/Slices/RecipesSlice";
-import { useEffect } from "react";
-
+import { useSelector } from "react-redux";
 const Recipes = () => {
-	const dispatch = useDispatch();
 	const recipes = useSelector((state) => state.recipes.recipes);
-	const token = useSelector((state) => state.auth.token);
-	console.log(recipes);
-	useEffect(() => {
+	/* useEffect(() => {
 		dispatch(fetchRecipes());
-	}, [dispatch]);
+	}, [dispatch]); */
+	console.log(recipes);
 
-	const fetchTest = async () => {
-		console.log(token);
-		const response = await fetch("https://localhost:7026/api/Recipes", {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
-		const data = await response.json();
-		console.log(data);
-	};
+	/* const fetchData = async () => {
+		try {
+			const response = await fetchWithToken("https://localhost:7026/api/Recipes");
+			const data = await response.json();
+			if (response.ok) {
+				console.log(data);
+				// Process your data
+			} else {
+				throw new Error(data.message || "An error occurred");
+			}
+		} catch (error) {
+			console.error("Fetch Error:", error);
+		}
+	}; */
 
 	return (
 		<div>
@@ -28,7 +27,7 @@ const Recipes = () => {
 			{recipes.map((recipe) => (
 				<p key={recipe.RecipeID}>{recipe.Title}</p>
 			))}
-			<button onClick={fetchTest}>Fetch</button>
+			<button>Fetch</button>
 		</div>
 	);
 };

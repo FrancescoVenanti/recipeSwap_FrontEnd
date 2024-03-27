@@ -1,30 +1,82 @@
-body,
-html,
-.App {
-	background-color: #212529;
-	color: lightgrey;
+$bgDark: #373a36;
+$bgLight: #f5f5f5;
+$highlight: #c29a77;
+$sageGreen: #97a97c;
+$warmBeige: #d3c0b0;
+
+.box {
+	background-color: $bgDark;
+	color: $bgLight;
+	border-radius: 0.5rem;
+	height: 200px;
+	width: 200px;
+	margin-block: 1rem;
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+	transition: all 0.3s;
+	&:hover {
+		transform: scale(1.01);
+		transition: all 0.3s;
+	}
 }
 
+// Removing overflow: hidden from global styles to allow for scrolling.
+body,
+html {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Roboto", sans-serif;
+	overflow: hidden;
+}
+
+.App {
+	background-color: $bgLight;
+	color: $bgDark;
+	margin: 0;
+	padding: 0;
+	width: 100vw;
+	height: 100vh; // Keeping the app container full viewport height.
+}
+.contentContainer,
+// to make the side and main scrollable
+.divNoBordi > .row > .col-4 {
+	overflow-y: auto; // Enabling vertical scrolling for these containers.
+	max-height: 100vh; // Ensuring they do not exceed the viewport height.
+	margin-block: 0.5rem;
+	padding: 1rem;
+}
+
+.dark {
+	background-color: $bgDark;
+	color: $bgLight;
+}
+.light {
+	background-color: $bgLight;
+	color: $bgDark;
+}
+.divNoBordi {
+	width: 100vw;
+	height: 100vh;
+}
 .sidebar {
-	background-color: rgb(238, 236, 218);
-	color: #fff;
-	position: fixed;
-	top: 50%;
-	transform: translate(0, -50%);
-	left: 0.5rem;
+	background-color: $bgDark;
+	color: $bgLight;
 	z-index: 100;
-	transition: width 1s;
+	transition: width 0.6s;
 	text-wrap: nowrap;
 	overflow-x: hidden;
 
 	a {
-		color: grey;
+		color: $bgLight;
 		text-decoration: none;
 		transition: all 1s;
 		transition: color 0.3s;
+		.iconSide {
+			color: inherit;
+		}
 	}
 	a:hover {
-		background-color: #212529;
+		background-color: $bgLight;
 		color: rgb(60, 175, 22);
 		transition: all 0.3s;
 		border-radius: 0.5rem 0 0 0.5rem;
@@ -54,7 +106,7 @@ html,
 		}
 	}
 	.sideProfile:hover {
-		background-color: #212529;
+		background-color: $bgLight;
 		color: rgb(60, 175, 22);
 		transform: scale(1.01);
 		transition: all 0.3s;
@@ -69,4 +121,43 @@ html,
 }
 .cursor-pointer {
 	cursor: pointer;
+}
+
+.divAuth {
+	background-image: url("./assets/authBg.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-attachment: fixed;
+	width: 100vw;
+	height: 100vh;
+	.registerPos {
+		position: absolute;
+		top: 50%;
+		right: 10%;
+		transform: translate(-50%, -50%);
+		/* Ensures the element is not too close to the edges on smaller screens */
+		max-width: 90%;
+		box-sizing: border-box;
+	}
+
+	/* Media query for mobile devices */
+	@media (max-width: 768px) {
+		.registerPos {
+			top: auto;
+			right: auto;
+			bottom: 10%; /* or another value that suits the mobile layout */
+			left: 10%; /* or another value that suits the mobile layout */
+			transform: translate(0, 0);
+			width: 80%; /* Set a specific width for mobile */
+			/* Optional: you can center it horizontally */
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+}
+.contentContainer {
+	max-height: 100vh;
+	margin-block: 0.5rem;
+	padding: 1rem;
 }

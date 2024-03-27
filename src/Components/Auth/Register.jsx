@@ -35,12 +35,14 @@ const Register = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className="d-flex flex-column align-items-center">
+		<form onSubmit={handleSubmit} className="d-flex flex-column align-items-center ">
+			<p className="lead fs-4 text-success fw-bold text-center">Register</p>
 			<input
 				type="email"
 				value={registerUser.Email}
 				onChange={(e) => setUser({ ...user, Email: e.target.value })}
 				placeholder="Email"
+				className="form-control mt-2"
 				required
 			/>
 			<input
@@ -48,6 +50,7 @@ const Register = () => {
 				value={user.PswHash}
 				onChange={(e) => setUser({ ...user, PswHash: e.target.value })}
 				placeholder="Password"
+				className="form-control mt-2"
 				required
 			/>
 			<input
@@ -56,6 +59,7 @@ const Register = () => {
 				onChange={(e) => setUser({ ...user, confirmPsw: e.target.value })}
 				placeholder="Confirm Password"
 				required
+				className="form-control mt-2"
 			/>
 			<input
 				type="text"
@@ -63,6 +67,7 @@ const Register = () => {
 				onChange={(e) => setUser({ ...user, Username: e.target.value })}
 				placeholder="Username"
 				required
+				className="form-control mt-2"
 			/>
 			<input
 				type="text"
@@ -70,6 +75,7 @@ const Register = () => {
 				onChange={(e) => setUser({ ...user, FirstName: e.target.value })}
 				placeholder="First Name"
 				required
+				className="form-control mt-2"
 			/>
 			<input
 				type="text"
@@ -77,26 +83,30 @@ const Register = () => {
 				onChange={(e) => setUser({ ...user, LastName: e.target.value })}
 				placeholder="Last Name"
 				required
+				className="form-control mt-2"
 			/>
 			<input
 				type="text"
 				value={user.Locality}
 				onChange={(e) => setUser({ ...user, Locality: e.target.value })}
+				className="form-control mt-2"
 				placeholder="Locality"
 			/>
 			<input
 				type="text"
 				value={user.Gender}
 				onChange={(e) => setUser({ ...user, Gender: e.target.value })}
+				className="form-control mt-2"
 				placeholder="Gender"
 			/>
 			<input
 				type="text"
 				value={user.Bio}
 				onChange={(e) => setUser({ ...user, Bio: e.target.value })}
+				className="form-control mt-2"
 				placeholder="Bio"
 			/>
-			<button type="submit" disabled={isLoading}>
+			<button type="submit" className="form-control mt-2" disabled={isLoading}>
 				Register
 			</button>
 			{isError && <p>{message}</p>}

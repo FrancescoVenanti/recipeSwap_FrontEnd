@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import fetchWithToken from "../interceptor";
 
-export const fetchRecipes = createAsyncThunk("recipes/fetchRecipes", async (_, { rejectWithValue }) => {
+export const fetchRecipes = createAsyncThunk("recipes/fetchRecipes", async (token, { rejectWithValue }) => {
 	try {
-		const response = await fetch("https://localhost:7026/api/Recipes");
+		const response = await fetchWithToken("https://localhost:7026/api/Recipes", token);
+		console.log("Token:", token);
 		const recipes = await response.json();
 		if (response.ok) {
 			console.log(recipes);

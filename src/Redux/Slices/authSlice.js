@@ -112,7 +112,7 @@ export const authSlice = createSlice({
 				state.isLoading = false;
 				state.isSuccess = true;
 				state.user = action.payload; // Assumi che l'action ritorni i dettagli dell'utente
-				state.token = action.payload;
+				state.token = action.payload.token;
 			})
 			.addCase(loginUser.rejected, (state, action) => {
 				state.isLoading = false;
