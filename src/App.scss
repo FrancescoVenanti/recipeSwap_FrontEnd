@@ -1,11 +1,12 @@
 $bgDark: #373a36;
-$bgLight: #f5f5f5;
+$bgLight: #eeeeee;
 $highlight: #c29a77;
 $sageGreen: #97a97c;
 $warmBeige: #d3c0b0;
+$bgWhite: #ffffff;
 
 .box {
-	background-color: $bgDark;
+	background-color: $bgWhite;
 	color: $bgLight;
 	border-radius: 0.5rem;
 	height: 200px;
@@ -22,18 +23,14 @@ $warmBeige: #d3c0b0;
 // Removing overflow: hidden from global styles to allow for scrolling.
 body,
 html {
-	margin: 0;
-	padding: 0;
+	background-color: $bgLight;
+	color: $bgDark;
 	box-sizing: border-box;
 	font-family: "Roboto", sans-serif;
 	overflow: hidden;
 }
 
 .App {
-	background-color: $bgLight;
-	color: $bgDark;
-	margin: 0;
-	padding: 0;
 	width: 100vw;
 	height: 100vh; // Keeping the app container full viewport height.
 }
@@ -54,20 +51,24 @@ html {
 	background-color: $bgLight;
 	color: $bgDark;
 }
+.White {
+	background-color: $bgWhite;
+	color: $bgDark;
+}
 .divNoBordi {
 	width: 100vw;
 	height: 100vh;
 }
 .sidebar {
-	background-color: $bgDark;
-	color: $bgLight;
+	background-color: $bgWhite;
+
 	z-index: 100;
 	transition: width 0.6s;
 	text-wrap: nowrap;
 	overflow-x: hidden;
 
 	a {
-		color: $bgLight;
+		color: $bgDark;
 		text-decoration: none;
 		transition: all 1s;
 		transition: color 0.3s;
@@ -82,7 +83,7 @@ html {
 		border-radius: 0.5rem 0 0 0.5rem;
 	}
 	.sideProfile {
-		background-color: black;
+		background-color: $bgDark;
 		color: #fff;
 		margin-inline-end: -0.5rem;
 		border: none;
@@ -160,4 +161,10 @@ html {
 	max-height: 100vh;
 	margin-block: 0.5rem;
 	padding: 1rem;
+}
+.dishImage {
+	max-width: 200px;
+	max-height: 200px;
+	aspect-ratio: 1/1;
+	object-fit: cover;
 }

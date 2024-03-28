@@ -17,7 +17,7 @@ function App() {
 	const [isLogged, setIsLogged] = useState(true);
 	return (
 		<Router>
-			<motion.div className="App divNoBordi" ref={constraintsRef}>
+			<motion.div className="App divNoBordi container" ref={constraintsRef}>
 				<div className="row">
 					<div className={`${isLogged ? "col flex-grow-0 vh-100" : "d-none"}`}>
 						<motion.div
@@ -69,7 +69,7 @@ function App() {
 							{/* Add more routes as needed */}
 						</Routes>
 					</div>
-					<div className="col-4 me-2 overflow-y-auto h-100">
+					<div className="col-4 me-2 overflow-y-auto h-100 d-none d-md-flex">
 						{/* Add more side content here as needed */}
 						{/* generate 3 boxes in column */}
 
