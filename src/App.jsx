@@ -17,7 +17,7 @@ function App() {
 	const [isLogged, setIsLogged] = useState(true);
 	return (
 		<Router>
-			<motion.div className="App divNoBordi container" ref={constraintsRef}>
+			<motion.div className={`App divNoBordi ${isLogged && "container"}`} ref={constraintsRef}>
 				<div className="row">
 					<div className={`${isLogged ? "col flex-grow-0 vh-100" : "d-none"}`}>
 						<motion.div

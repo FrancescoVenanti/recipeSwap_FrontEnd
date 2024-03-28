@@ -5,11 +5,13 @@ import { fetchRecipes } from "../../../Redux/Slices/RecipesSlice";
 import NewRecipe from "./NewRecipe/NewRecipe";
 import { AnimatePresence, motion } from "framer-motion";
 import imgPlaceholder from "../../../assets/dishPlaceholder.jpg";
+import { addFavorite } from "../../../Redux/Slices/favoriteSlice";
 
 const Home = () => {
 	const [recipes, setRecipes] = useState([]);
 	const [openRecipe, setOpenRecipe] = useState(false);
 	const user = useSelector((state) => state.auth.user);
+	const userId = useSelector((state) => state.auth.user.id);
 	const token = useSelector((state) => state.auth.token);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -24,6 +26,24 @@ const Home = () => {
 				staggerChildren: 0.3,
 			},
 		},
+	};
+	const handleFavorites = async (ProductId) => {
+		try {
+			console.log("Adding favorite:", { userId, ProductId, token });
+			// Dispatch the `addFavorite` thunk with userId, productId, and token
+			const actionResult = await dispatch(addFavorite({ userId, ProductId, token }));
+			// Handle response based on action result type
+			if (addFavorite.fulfilled.match(actionResult)) {
+				console.log("Success:", actionResult.payload);
+				// Optionally, perform any success logic here, e.g., show a success message
+			} else if (addFavorite.rejected.match(actionResult)) {
+				console.error("Failed:", actionResult.error.message);
+				// Optionally, perform any error handling logic here, e.g., show an error message
+			}
+		} catch (error) {
+			console.error("Error handling favorites:", error);
+			// Handle any errors that occurred during the dispatch process
+		}
 	};
 	useEffect(() => {
 		if (user == null) {
@@ -82,6 +102,12 @@ const Home = () => {
 									<h2>{recipe.title}</h2>
 									<p>{recipe.description}</p>
 									<p>{recipe.ingredients}</p>
+									<button
+										onClick={() => handleFavorites(recipe.recipeId)}
+										className="btn btn-primary"
+									>
+										Cutoe
+									</button>
 								</div>
 							</div>
 						</div>
