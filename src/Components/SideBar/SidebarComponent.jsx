@@ -15,7 +15,8 @@ import { Link, useNavigate } from "react-router-dom"; // Import Link
 import { logoutUser } from "../../Redux/Slices/authSlice";
 import { useDispatch } from "react-redux";
 
-const SidebarComponent = () => {
+// eslint-disable-next-line react/prop-types
+const SidebarComponent = ({ setIsNavOpen }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
 	const dispatch = useDispatch();
@@ -25,7 +26,10 @@ const SidebarComponent = () => {
 		navigate("/Authentication");
 	};
 
-	const handleToggleSidebar = () => setIsOpen(!isOpen);
+	const handleToggleSidebar = () => {
+		setIsOpen(!isOpen);
+		setIsNavOpen(!isOpen);
+	};
 	const handleHoverChange = () => setIsHovered(!isHovered);
 
 	const variants = {

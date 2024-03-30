@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { fetchRecipes } from "../../../Redux/Slices/RecipesSlice";
 import NewRecipe from "./NewRecipe/NewRecipe";
 import { AnimatePresence, motion } from "framer-motion";
-import imgPlaceholder from "../../../assets/dishPlaceholder.jpg";
-import { addFavorite } from "../../../Redux/Slices/favoriteSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAdd, faMinus } from "@fortawesome/free-solid-svg-icons";
+import SingleRecipe from "./SingleRecipe/SingleRecipe";
 
 const Home = () => {
 	const [recipes, setRecipes] = useState([]);
 	const [openRecipe, setOpenRecipe] = useState(false);
 	const user = useSelector((state) => state.auth.user);
-	const userId = useSelector((state) => state.auth.user.id);
 	const token = useSelector((state) => state.auth.token);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -27,24 +27,7 @@ const Home = () => {
 			},
 		},
 	};
-	const handleFavorites = async (ProductId) => {
-		try {
-			console.log("Adding favorite:", { userId, ProductId, token });
-			// Dispatch the `addFavorite` thunk with userId, productId, and token
-			const actionResult = await dispatch(addFavorite({ userId, ProductId, token }));
-			// Handle response based on action result type
-			if (addFavorite.fulfilled.match(actionResult)) {
-				console.log("Success:", actionResult.payload);
-				// Optionally, perform any success logic here, e.g., show a success message
-			} else if (addFavorite.rejected.match(actionResult)) {
-				console.error("Failed:", actionResult.error.message);
-				// Optionally, perform any error handling logic here, e.g., show an error message
-			}
-		} catch (error) {
-			console.error("Error handling favorites:", error);
-			// Handle any errors that occurred during the dispatch process
-		}
-	};
+
 	useEffect(() => {
 		if (user == null) {
 			navigate("/Authentication");
@@ -60,18 +43,25 @@ const Home = () => {
 	return (
 		<>
 			<div className=" h-100">
-				<h1>Benvenuto {user.username}</h1>
-				<div className="row g-3">
+				<h1 className="display-4">
+					Benvenuto <span className="text-green">{user.username}</span>
+				</h1>
+				<div className="row g-4  overflow-x-hidden">
 					<div className="col-12">
 						<div className=" p-2 rounded-2">
-							<div className="d-flex my-2">
-								<p className="display-6 m-0 me-2">Create a new recipe</p>
-								<input
-									type="button"
+							<div className="col my-2">
+								<button
 									onClick={() => setOpenRecipe(!openRecipe)}
-									className="btn btn-primary"
-									value={openRecipe ? "Close Recipe" : "Add Recipe"}
-								/>
+									className="btn btn-outline-green rounded-2 shadow"
+								>
+									{openRecipe ? (
+										<FontAwesomeIcon icon={faMinus} />
+									) : (
+										<>
+											Add a recipe <FontAwesomeIcon icon={faAdd} />
+										</>
+									)}
+								</button>
 							</div>
 
 							<AnimatePresence>
@@ -81,6 +71,7 @@ const Home = () => {
 										animate="visible"
 										exit="hidden"
 										variants={containerVariants}
+										className="shadow"
 									>
 										<NewRecipe />
 									</motion.div>
@@ -89,29 +80,13 @@ const Home = () => {
 						</div>
 					</div>
 					{recipes.map((recipe) => (
-						<div key={recipe.recipeId} className="col-12">
-							<div className="bgLight d-flex">
-								<div className="p-2 White rounded-2 rounded-start-pill shadow">
-									<img
-										src={imgPlaceholder}
-										alt={recipe.title}
-										className=" rounded-start-pill rounded-end-3 dishImage"
-									/>
-								</div>
-								<div className="White p-2 rounded-2 rounded-end-pill shadow ms-2 w-100">
-									<h2>{recipe.title}</h2>
-									<p>{recipe.description}</p>
-									<p>{recipe.ingredients}</p>
-									<button
-										onClick={() => handleFavorites(recipe.recipeId)}
-										className="btn btn-primary"
-									>
-										Cutoe
-									</button>
-								</div>
-							</div>
-						</div>
+						<SingleRecipe key={recipe.recipeId} recipe={recipe} />
 					))}
+					<div className="col-12 my-4">
+						<div className="d-flex justify-content-center">
+							<button className="btn btn-primary">Load More</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</>

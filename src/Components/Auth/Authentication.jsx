@@ -1,21 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
 import Register from "./Register";
 import Login from "./Login";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { logoutUser } from "../../Redux/Slices/authSlice";
 
 // eslint-disable-next-line react/prop-types
 const Authentication = ({ setIsLogged }) => {
 	const token = useSelector((state) => state.auth.token);
 	console.log(token);
-	const user = useSelector((state) => state.auth.user);
-	console.log(user);
-	const dispatch = useDispatch();
-	if (user == null) {
-		dispatch(logoutUser());
-	}
 
-	setIsLogged(false);
+	const user = useSelector((state) => state.auth.user);
+
+	const dispatch = useDispatch();
+	useEffect(() => {
+		if (user == null) {
+			dispatch(logoutUser());
+		} else {
+			console.log(user);
+		}
+		setIsLogged(false);
+	}, [user, dispatch, setIsLogged]); // Add dependencies here
 	const [accedi, setAccedi] = useState(true);
 
 	return (

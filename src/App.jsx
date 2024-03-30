@@ -10,11 +10,12 @@ import Discover from "./Components/MainPage/Discover/Discover";
 import Favourites from "./Components/MainPage/Favourites/Favourites";
 import Messages from "./Components/MainPage/Messages/Messages";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+import SideContent from "./Components/MainPage/rightSide/SideContent";
 
 function App() {
-	//come prendo roba dallo store redux?
 	const constraintsRef = useRef(null);
 	const [isLogged, setIsLogged] = useState(true);
+	const [isNavOpen, setIsNavOpen] = useState(false);
 	return (
 		<Router>
 			<motion.div className={`App divNoBordi ${isLogged && "container"}`} ref={constraintsRef}>
@@ -28,10 +29,14 @@ function App() {
 							dragTransition={{ bounceDamping: 5 }}
 							className="d-flex justify-content-center align-items-center h-100"
 						>
-							<SidebarComponent />
+							<SidebarComponent setIsNavOpen={setIsNavOpen} />
 						</motion.div>
 					</div>
-					<div className={`${isLogged ? "col flex-grow-1 contentContainer rounded-4" : ""}`}>
+					<div
+						className={`${isLogged ? "col flex-grow-1 contentContainer rounded-4" : ""} ${
+							isNavOpen && "d-none d-sm-block"
+						}`}
+					>
 						<Routes>
 							<Route path="/Authentication" element={<Authentication setIsLogged={setIsLogged} />} />
 							<Route
@@ -69,29 +74,11 @@ function App() {
 							{/* Add more routes as needed */}
 						</Routes>
 					</div>
-					<div className="col-4 me-2 overflow-y-auto h-100 d-none d-md-flex">
+					<div className="col-3 me-2 overflow-y-auto vh-100 d-none d-lg-flex">
 						{/* Add more side content here as needed */}
 						{/* generate 3 boxes in column */}
-
-						<div className="d-flex align-items-center h-100 overflow-y-auto flex-column justify-content-center">
-							<h2 className="text-center mt-2">Side content here</h2>
-							<p>
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, dignissimos, et debitis
-								illo similique incidunt reprehenderit ut autem iste adipisci corporis inventore
-								assumenda suscipit enim rerum laborum perferendis sed molestiae. Reprehenderit
-								repellendus molestias facilis! Dolor cum beatae similique reiciendis nihil eius nisi,
-								nulla ducimus dolorem mollitia, fugiat, accusamus odit a exercitationem ipsam. Sapiente,
-								veritatis impedit reprehenderit maxime cupiditate officiis labore.
-							</p>
-							<div className="box"></div>
-							<div className="box"></div>
-							<div className="box"></div>
-							<div className="box"></div>
-							<div className="box"></div>
-							<div className="box"></div>
-							<div className="box"></div>
-							<div className="box"></div>
-							<div className="box"></div>
+						<div className="h-100">
+							<SideContent />
 						</div>
 					</div>
 				</div>

@@ -14,6 +14,7 @@ const Favourites = () => {
 			console.log("aaaa");
 			console.log(items);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dispatch, userId, token]);
 
 	if (status === "loading") return <div>Loading...</div>;
@@ -22,9 +23,11 @@ const Favourites = () => {
 		<div>
 			<h1>Wishlist</h1>
 			<ul>
-				{items.map((item) => (
-					<li key={item.favoriteId}>{item.recipe.title}</li>
-				))}
+				{items.length === 0 ? (
+					<li>No items in wishlist</li>
+				) : (
+					items.map((item) => <li key={item.favoriteId}>{item.recipe.title}</li>)
+				)}
 			</ul>
 		</div>
 	);

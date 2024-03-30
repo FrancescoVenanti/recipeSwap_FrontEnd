@@ -73,7 +73,8 @@ export const favoriteSlice = createSlice({
 			.addCase(addFavorite.pending, (state) => {
 				state.status = "loading";
 			})
-			.addCase(addFavorite.fulfilled, (state) => {
+			.addCase(addFavorite.fulfilled, (state, action) => {
+				console.log(action.payload);
 				state.status = "succeeded";
 			})
 			.addCase(addFavorite.rejected, (state, action) => {

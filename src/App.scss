@@ -1,7 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 $bgDark: #373a36;
 $bgLight: #eeeeee;
-$highlight: #c29a77;
-$sageGreen: #97a97c;
+$highlight: #ee4018;
+$sageGreen: #8ab24e;
 $warmBeige: #d3c0b0;
 $bgWhite: #ffffff;
 
@@ -26,7 +27,7 @@ html {
 	background-color: $bgLight;
 	color: $bgDark;
 	box-sizing: border-box;
-	font-family: "Roboto", sans-serif;
+	font-family: "Nunito", sans-serif;
 	overflow: hidden;
 }
 
@@ -34,6 +35,17 @@ html {
 	width: 100vw;
 	height: 100vh; // Keeping the app container full viewport height.
 }
+//scrollbar
+::-webkit-scrollbar {
+	width: 0px;
+}
+::-webkit-scrollbar-track {
+	background: $bgLight;
+}
+::-webkit-scrollbar-thumb {
+	background: $sageGreen;
+}
+
 .contentContainer,
 // to make the side and main scrollable
 .divNoBordi > .row > .col-4 {
@@ -55,9 +67,18 @@ html {
 	background-color: $bgWhite;
 	color: $bgDark;
 }
+.text-green {
+	color: $sageGreen;
+}
+.text-highlight {
+	color: $highlight;
+}
 .divNoBordi {
 	width: 100vw;
 	height: 100vh;
+}
+.vertical-layout {
+	flex-direction: column;
 }
 .sidebar {
 	background-color: $bgWhite;
@@ -78,7 +99,7 @@ html {
 	}
 	a:hover {
 		background-color: $bgLight;
-		color: rgb(60, 175, 22);
+		color: $sageGreen;
 		transition: all 0.3s;
 		border-radius: 0.5rem 0 0 0.5rem;
 	}
@@ -162,9 +183,81 @@ html {
 	margin-block: 0.5rem;
 	padding: 1rem;
 }
+@media (min-width: 992px) {
+	.recipeContainer {
+		height: 200px;
+	}
+}
+.no-line-break {
+	white-space: nowrap; /* Prevents the text from wrapping to a new line */
+	overflow: hidden; /* Ensures the overflow text is hidden */
+	text-overflow: ellipsis; /* Adds an ellipsis to signify there's more text */
+}
+
 .dishImage {
 	max-width: 200px;
 	max-height: 200px;
 	aspect-ratio: 1/1;
 	object-fit: cover;
+}
+.btn-outline-green {
+	background-color: $bgWhite;
+	color: $sageGreen;
+	border: 1px solid $sageGreen;
+	transition: all 0.3s;
+	&:hover {
+		background-color: $sageGreen;
+		color: $bgWhite;
+		transition: all 0.3s;
+	}
+}
+.btn-outline-highline {
+	background-color: $bgWhite;
+	color: $highlight;
+	border: 1px solid $highlight;
+	transition: all 0.3s;
+	&:hover {
+		background-color: $highlight;
+		color: $bgWhite;
+		transition: all 0.3s;
+	}
+}
+.mostLikedRecipes {
+	margin-block-start: -25px !important;
+}
+.num-award {
+	position: absolute;
+	top: -20px;
+	right: -20px;
+	font-size: 2.5rem;
+	z-index: 10;
+	transform: rotate(10deg); /* Specify the rotation degree if needed, 0deg if no rotation */
+	width: 60px; /* Fixed width */
+	height: 60px; /* Fixed height */
+	background-color: $sageGreen;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%; /* Makes the badge circular */
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Adds a shadow to the text for better readability */
+}
+.num-award-animation {
+	animation: popIn 0.8s ease-out forwards;
+}
+@keyframes popIn {
+	0% {
+		transform: scale(1) rotate(0deg);
+		opacity: 0;
+	}
+	50% {
+		transform: scale(1.2) rotate(-10deg);
+		opacity: 1;
+	}
+	70% {
+		transform: scale(0.9) rotate(10deg);
+	}
+	100% {
+		transform: scale(1) rotate(-10deg);
+		opacity: 1;
+	}
 }
