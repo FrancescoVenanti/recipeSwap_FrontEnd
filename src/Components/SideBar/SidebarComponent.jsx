@@ -16,7 +16,7 @@ import { logoutUser } from "../../Redux/Slices/authSlice";
 import { useDispatch } from "react-redux";
 
 // eslint-disable-next-line react/prop-types
-const SidebarComponent = ({ setIsNavOpen }) => {
+const SidebarComponent = ({ setIsNavOpen, bgColor }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
 	const dispatch = useDispatch();
@@ -38,7 +38,10 @@ const SidebarComponent = ({ setIsNavOpen }) => {
 	};
 
 	return (
-		<div className={`ms-2 sidebar rounded-3 pt-3 ps-2 ${isOpen ? "sideOpen" : "sideClose"}`}>
+		<div
+			style={{ backgroundColor: bgColor }}
+			className={`ms-2 sidebar rounded-3 pt-3 ps-2  ${isOpen ? "sideOpen" : "sideClose"}`}
+		>
 			<div className="pb-3 d-flex flex-column justify-content-center align-items-center mb-5">
 				{isOpen ? (
 					<a className="fs-3 p-3 w-100 " onClick={handleToggleSidebar}>

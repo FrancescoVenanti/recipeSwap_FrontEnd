@@ -27,7 +27,9 @@ const TopLikedRecipe = ({ recipe, index }) => {
 							<button className="btn bg-transparent fs-4 position-absolute ms-1 start-0 bottom-0 mb-1 text-green">
 								<FontAwesomeIcon icon={faThumbsUp} /> {recipe.likes}
 							</button>
-							<FavoriteButton recipe={recipe} />
+							<div className="position-absolute me-1 end-0 bottom-0 mb-1">
+								<FavoriteButton recipe={recipe} />
+							</div>
 						</div>
 					)}
 				</div>

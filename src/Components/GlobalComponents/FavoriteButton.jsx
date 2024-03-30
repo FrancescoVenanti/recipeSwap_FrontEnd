@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import {} from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { addFavorite, fetchFavorites } from "../../Redux/Slices/favoriteSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 const FavoriteButton = ({ recipe }) => {
 	const dispatch = useDispatch();
@@ -30,10 +31,7 @@ const FavoriteButton = ({ recipe }) => {
 		await dispatch(fetchFavorites({ userId, token }));
 	};
 	return (
-		<button
-			onClick={() => handleFavorites()}
-			className="btn bg-transparent fs-4 position-absolute end-0 me-1 bottom-0 mb-1"
-		>
+		<button onClick={() => handleFavorites()} className="btn bg-transparent fs-4">
 			{isFavorited ? (
 				<FontAwesomeIcon icon={faHeart} className="text-highlight" />
 			) : (

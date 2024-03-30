@@ -4,6 +4,8 @@ import { useInView } from "react-intersection-observer";
 
 import PropTypes from "prop-types";
 import FavoriteButton from "../../../GlobalComponents/FavoriteButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 
 // Animation variants
 const variants = {
@@ -42,7 +44,7 @@ const SingleRecipe = ({ recipe }) => {
 				className="col-12"
 			>
 				{/* Image Container - Make it full width on small screens and automatically adjust on larger screens */}
-				<div className="rounded-2 d-flex justify-content-center align-items-center flex-column flex-md-row recipeContainer">
+				<div className="rounded-2 d-flex justify-content-center align-items-center flex-column flex-md-row recipeContainer ">
 					<img
 						src={imgPlaceholder}
 						alt={recipe.title}
@@ -50,11 +52,21 @@ const SingleRecipe = ({ recipe }) => {
 						style={{ maxWidth: "100%", height: "auto" }}
 					/>
 					{/* Text Container - Allow it to stack underneath on small screens */}
-					<div className="White p-2 rounded-2 shadow ms-md-2 mt-2 mt-md-0 w-100 h-100 no-line-break d-flex flex-column position-relative">
-						<h2 className="no-line-break">{recipe.title}</h2>
+					<div className="White p-2 rounded-2 shadow ms-md-2 mt-2 mt-md-0 w-100 h-100 no-line-break d-flex flex-column  ">
+						<div className="d-flex justify-content-between align-items-center">
+							<h2 className="no-line-break">{recipe.title}</h2>
+							<FavoriteButton recipe={recipe} />
+						</div>
+
 						<p className="m-0">{recipe.description}</p>
 						<p className="m-0 lead text-black-50 italic fs-6">Ingredients: {recipe.ingredients}</p>
-						<FavoriteButton recipe={recipe} />
+
+						<div className="mt-auto d-flex align-items-center ">
+							<button className="btn bg-transparent text-green">
+								<FontAwesomeIcon icon={faThumbsUp} className="fs-4 " />
+							</button>
+							<button className="btn-bland rounded-2 ms-4">Comments</button>
+						</div>
 					</div>
 				</div>
 			</motion.div>

@@ -16,26 +16,37 @@ function App() {
 	const constraintsRef = useRef(null);
 	const [isLogged, setIsLogged] = useState(true);
 	const [isNavOpen, setIsNavOpen] = useState(false);
+	const [bgColor, setBgColor] = useState("#fff");
 	return (
 		<Router>
 			<motion.div className={`App divNoBordi ${isLogged && "container"}`} ref={constraintsRef}>
 				<div className="row">
-					<div className={`${isLogged ? "col flex-grow-0 vh-100" : "d-none"}`}>
+					<div
+						className={`${
+							isLogged ? "col flex-grow-0 vh-100" : "d-none"
+						} d-flex justify-content-center align-items-center`}
+					>
 						<motion.div
 							drag
 							dragConstraints={constraintsRef}
 							dragElastic={0.1}
 							dragMomentum={true}
 							dragTransition={{ bounceDamping: 5 }}
-							className="d-flex justify-content-center align-items-center h-100"
+							className="d-flex justify-content-center align-items-center "
+							onDragStart={() => {
+								setBgColor("#8ab24e"); // Replace 'draggingBgColor' with the color you want during drag
+							}}
+							onDragEnd={() => {
+								setBgColor("#fff"); // Reset to the initial color
+							}}
 						>
-							<SidebarComponent setIsNavOpen={setIsNavOpen} />
+							<SidebarComponent setIsNavOpen={setIsNavOpen} bgColor={bgColor} />
 						</motion.div>
 					</div>
 					<div
 						className={`${isLogged ? "col flex-grow-1 contentContainer rounded-4" : ""} ${
 							isNavOpen && "d-none d-sm-block"
-						}`}
+						} `}
 					>
 						<Routes>
 							<Route path="/Authentication" element={<Authentication setIsLogged={setIsLogged} />} />

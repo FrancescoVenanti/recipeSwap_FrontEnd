@@ -3,7 +3,7 @@ $bgDark: #373a36;
 $bgLight: #eeeeee;
 $highlight: #ee4018;
 $sageGreen: #8ab24e;
-$warmBeige: #d3c0b0;
+$warmBeige: #d5b69e;
 $bgWhite: #ffffff;
 
 .box {
@@ -80,10 +80,12 @@ html {
 .vertical-layout {
 	flex-direction: column;
 }
+.z-index-99 {
+	z-index: -1;
+}
 .sidebar {
 	background-color: $bgWhite;
-
-	z-index: 100;
+	z-index: 1000;
 	transition: width 0.6s;
 	text-wrap: nowrap;
 	overflow-x: hidden;
@@ -219,6 +221,17 @@ html {
 	&:hover {
 		background-color: $highlight;
 		color: $bgWhite;
+		transition: all 0.3s;
+	}
+}
+.btn-bland {
+	background-color: $warmBeige;
+	color: $bgWhite;
+	border: 1px solid $bgWhite;
+	transition: all 0.3s;
+	&:hover {
+		background-color: $bgWhite;
+		color: $warmBeige;
 		transition: all 0.3s;
 	}
 }
