@@ -1,13 +1,9 @@
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import imgPlaceholder from "../../../../assets/dishPlaceholder.jpg";
-import { useDispatch, useSelector } from "react-redux";
-import { addFavorite } from "../../../../Redux/Slices/favoriteSlice";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import FavoriteButton from "../../../GlobalComponents/FavoriteButton";
 
 // Animation variants
 const variants = {
@@ -28,24 +24,8 @@ const variants = {
 
 const SingleRecipe = ({ recipe }) => {
 	console.log(recipe);
-	const dispatch = useDispatch();
-	const userId = useSelector((state) => state.auth.user.id);
-	const token = useSelector((state) => state.auth.token);
-	const favorites = useSelector((state) => state.favorites.items);
-	const ProductId = recipe.recipeId;
 
-	// Introducing a local state to manage favorite button text dynamically
-	const [isFavorited, setIsFavorited] = useState(favorites.some((favorite) => favorite.recipeId === recipe.recipeId));
 	// Effect hook to update local `isFavorited` state whenever the `favorites` state changes
-	useEffect(() => {
-		setIsFavorited(favorites.some((favorite) => favorite.recipeId === recipe.recipeId));
-	}, [favorites, recipe.recipeId]);
-
-	const handleFavorites = () => {
-		console.log("handleFavorites called");
-		dispatch(addFavorite({ userId, ProductId, token }));
-		setIsFavorited(!isFavorited);
-	};
 
 	const { ref, inView } = useInView({
 		triggerOnce: true,
@@ -70,20 +50,11 @@ const SingleRecipe = ({ recipe }) => {
 						style={{ maxWidth: "100%", height: "auto" }}
 					/>
 					{/* Text Container - Allow it to stack underneath on small screens */}
-					<div className="White p-2 rounded-2 shadow ms-md-2 mt-2 mt-md-0 w-100 h-100 no-line-break d-flex flex-column">
+					<div className="White p-2 rounded-2 shadow ms-md-2 mt-2 mt-md-0 w-100 h-100 no-line-break d-flex flex-column position-relative">
 						<h2 className="no-line-break">{recipe.title}</h2>
 						<p className="m-0">{recipe.description}</p>
 						<p className="m-0 lead text-black-50 italic fs-6">Ingredients: {recipe.ingredients}</p>
-						<button
-							onClick={() => handleFavorites()}
-							className="btn bg-transparent fs-4 align-self-end mt-auto"
-						>
-							{isFavorited ? (
-								<FontAwesomeIcon icon={faHeart} className="text-highlight" />
-							) : (
-								<FontAwesomeIcon icon={faHeart} />
-							)}
-						</button>
+						<FavoriteButton recipe={recipe} />
 					</div>
 				</div>
 			</motion.div>

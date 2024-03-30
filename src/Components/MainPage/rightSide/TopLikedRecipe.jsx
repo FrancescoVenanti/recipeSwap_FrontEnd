@@ -1,31 +1,12 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addFavorite } from "../../../Redux/Slices/favoriteSlice";
+import { useState } from "react";
 import imgPlaceholder from "../../../assets/dishPlaceholder.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import FavoriteButton from "../../../Components/GlobalComponents/FavoriteButton";
 
 const TopLikedRecipe = ({ recipe, index }) => {
-	const dispatch = useDispatch();
-	const userId = useSelector((state) => state.auth.user?.id);
-	const token = useSelector((state) => state.auth.token);
-	const favorites = useSelector((state) => state.favorites.items);
-	const ProductId = recipe.recipeId;
-
-	// Introducing a local state to manage favorite button text dynamically
-	const [isFavorited, setIsFavorited] = useState(favorites.some((favorite) => favorite.recipeId === recipe.recipeId));
 	const [isHovered, setIsHovered] = useState(false);
-	// Effect hook to update local `isFavorited` state whenever the `favorites` state changes
-	useEffect(() => {
-		setIsFavorited(favorites.some((favorite) => favorite.recipeId === recipe.recipeId));
-	}, [favorites, recipe.recipeId]);
-
-	const handleFavorites = () => {
-		console.log("handleFavorites called");
-		dispatch(addFavorite({ userId, ProductId, token }));
-		setIsFavorited(!isFavorited);
-	};
 
 	return (
 		<>
@@ -46,16 +27,7 @@ const TopLikedRecipe = ({ recipe, index }) => {
 							<button className="btn bg-transparent fs-4 position-absolute ms-1 start-0 bottom-0 mb-1 text-green">
 								<FontAwesomeIcon icon={faThumbsUp} /> {recipe.likes}
 							</button>
-							<button
-								onClick={() => handleFavorites()}
-								className="btn bg-transparent fs-4 position-absolute end-0 me-1 bottom-0 mb-1"
-							>
-								{isFavorited ? (
-									<FontAwesomeIcon icon={faHeart} className="text-highlight" />
-								) : (
-									<FontAwesomeIcon icon={faHeart} />
-								)}
-							</button>
+							<FavoriteButton recipe={recipe} />
 						</div>
 					)}
 				</div>
