@@ -109,7 +109,7 @@ const Register = () => {
 			<button type="submit" className="form-control mt-2" disabled={isLoading}>
 				Register
 			</button>
-			{isError && <p>{message}</p>}
+			{/* {isError && <p>{message}</p>} */}
 		</form>
 	);
 };

@@ -18,6 +18,28 @@ export const fetchRecipes = createAsyncThunk("recipes/fetchRecipes", async (toke
 	}
 });
 
+export const postRecipe = createAsyncThunk("recipes/postRecipe", async ({ token, recipeData }, { rejectWithValue }) => {
+	try {
+		const response = await fetchWithToken("https://localhost:7026/api/Recipes", token, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(recipeData),
+		});
+
+		const data = await response.json();
+		if (response.ok) {
+			return data;
+		} else {
+			return rejectWithValue(data);
+		}
+	} catch (error) {
+		console.error("Error:", error);
+		return rejectWithValue(error.toString());
+	}
+});
+
 export const RecipesSlice = createSlice({
 	name: "recipes",
 	initialState: {
@@ -41,6 +63,20 @@ export const RecipesSlice = createSlice({
 			})
 			.addCase(fetchRecipes.rejected, (state, action) => {
 				state.isLoading = false;
+				state.isError = true;
+				state.errorMessage = action.payload;
+			})
+			// Handling postRecipe async actions
+			.addCase(postRecipe.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(postRecipe.fulfilled, (state, action) => {
+				// Handle successful recipe post
+				// You could add the new recipe to your state here if needed
+				state.recipes.push(action.payload);
+			})
+			.addCase(postRecipe.rejected, (state, action) => {
+				// Handle failed post
 				state.isError = true;
 				state.errorMessage = action.payload;
 			});

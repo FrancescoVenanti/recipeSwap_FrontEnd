@@ -23,7 +23,7 @@ function App() {
 				<div className="row">
 					<div
 						className={`${
-							isLogged ? "col flex-grow-0 vh-100" : "d-none"
+							isLogged ? "col flex-grow-0 vh-100 p-0 pe-1" : "d-none"
 						} d-flex justify-content-center align-items-center`}
 					>
 						<motion.div

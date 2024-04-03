@@ -4,11 +4,11 @@ import {
 	faHome,
 	faUtensils,
 	faHeart,
-	faMessage,
 	faSearch,
 	faBars,
 	faXmark,
 	faDoorOpen,
+	faKiwiBird,
 } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom"; // Import Link
@@ -90,8 +90,8 @@ const SidebarComponent = ({ setIsNavOpen, bgColor }) => {
 					{isOpen && "Favourites"}
 				</Link>
 				<Link to="/messages" className="fs-3 p-3 w-100">
-					<FontAwesomeIcon className={`me-3 ${isOpen ? "iconSide" : ""}`} icon={faMessage} />
-					{isOpen && "Messages"}
+					<FontAwesomeIcon className={`me-3 ${isOpen ? "iconSide" : ""}`} icon={faKiwiBird} />
+					{isOpen && "Ask Kiwi"}
 				</Link>
 				<a className="fs-3 p-3 w-100">
 					<FontAwesomeIcon

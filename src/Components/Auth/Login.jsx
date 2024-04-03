@@ -38,7 +38,7 @@ const Login = ({ setIsLogged }) => {
 				onChange={(e) => setPswHash(e.target.value)}
 				placeholder="Password"
 			/>
-			<button className="form-control mt-2" type="submit">
+			<button className="form-control mt-2 " type="submit">
 				Login
 			</button>
 		</form>
