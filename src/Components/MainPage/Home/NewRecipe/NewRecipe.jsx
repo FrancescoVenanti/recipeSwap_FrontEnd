@@ -12,6 +12,8 @@ const NewRecipe = () => {
 	const [description, setDescription] = useState("");
 	const [ingredients, setIngredients] = useState("");
 	const [steps, setSteps] = useState([""]);
+	const [image, setImage] = useState(null);
+
 	const dispatch = useDispatch();
 
 	const addStep = () => setSteps([...steps, ""]);
@@ -31,18 +33,21 @@ const NewRecipe = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		const instructions = steps.join("|||"); // Combine steps into one string
+		const formData = new FormData();
+		formData.append("UserId", userId.toString());
+		formData.append("Title", title);
+		formData.append("Description", description);
+		formData.append("Ingredients", ingredients);
+		formData.append("Instructions", steps.join("|||"));
 
-		const recipeData = {
-			UserId: parseInt(userId, 10), // Convert userId to number
-			Title: title,
-			Description: description,
-			Ingredients: ingredients,
-			Instructions: instructions,
-			//TODO Image field can be handled here when ready
-		};
-		console.log("recipeData ", recipeData);
-		dispatch(postRecipe({ token, recipeData }));
+		// Append the image file if selected
+		if (image) {
+			formData.append("Image", image);
+		}
+
+		console.log("Submitting recipe...");
+		// Adjust the action to handle FormData
+		dispatch(postRecipe({ token, recipeData: formData }));
 	};
 
 	return (
@@ -90,12 +95,13 @@ const NewRecipe = () => {
 					</FormGroup>
 				))}
 				<div className="d-flex flex-column align-items-center justify-content-center">
-					<button type="button" className="btn btn-outline-success mt-2 mx-auto" onClick={addStep}>
+					<button type="button" className="btn btn-outline-green mt-2 mx-auto" onClick={addStep}>
 						Add Step
 					</button>
+					<input type="file" className="form-control mt-2" onChange={(e) => setImage(e.target.files[0])} />
 
 					{/* <input type="file" className="form-control mt-2" /> Placeholder for future image upload */}
-					<button type="submit" className="btn btn-success mt-2">
+					<button type="submit" className="btn btn-outline-green mt-2">
 						Create Recipe
 					</button>
 				</div>

@@ -46,7 +46,7 @@ const SingleRecipe = ({ recipe }) => {
 				{/* Image Container - Make it full width on small screens and automatically adjust on larger screens */}
 				<div className="rounded-2 d-flex justify-content-center align-items-center flex-column flex-md-row recipeContainer ">
 					<img
-						src={imgPlaceholder}
+						src={recipe.image ? recipe.image : imgPlaceholder}
 						alt={recipe.title}
 						className="rounded-2 dishImage p-2 White shadow"
 						style={{ maxWidth: "100%", height: "auto" }}

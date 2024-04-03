@@ -22,10 +22,7 @@ export const postRecipe = createAsyncThunk("recipes/postRecipe", async ({ token,
 	try {
 		const response = await fetchWithToken("https://localhost:7026/api/Recipes", token, {
 			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(recipeData),
+			body: recipeData, // Directly use the FormData object passed from the component
 		});
 
 		const data = await response.json();
