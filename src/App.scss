@@ -5,30 +5,32 @@ $highlight: #ee4018;
 $sageGreen: #8ab24e;
 $warmBeige: #d5b69e;
 $bgWhite: #ffffff;
+$dark-bgDark: #eeeeee; // For dark mode, invert the light mode colors
+$dark-bgLight: #373a36;
 
-.box {
-	background-color: $bgWhite;
-	color: $bgLight;
-	border-radius: 0.5rem;
-	height: 200px;
-	width: 200px;
-	margin-block: 1rem;
-	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-	transition: all 0.3s;
-	&:hover {
-		transform: scale(1.01);
-		transition: all 0.3s;
-	}
+:root {
+	--bgDark: #373a36;
+	--bgLight: #eeeeee;
+	// Add your other light theme properties here...
+}
+
+// Use a separate selector to define dark theme overrides
+[data-theme="dark"] {
+	--bgDark: #eeeeee; // Dark theme overrides
+	--bgLight: #373a36;
+	// Add your other dark theme overrides here...
 }
 
 // Removing overflow: hidden from global styles to allow for scrolling.
 body,
 html {
-	background-color: $bgLight;
-	color: $bgDark;
+	background-color: var(--bgLight);
+	color: var(--bgDark);
+	// other themed properties
 	box-sizing: border-box;
 	font-family: "Nunito", sans-serif;
 	overflow: hidden;
+	transition: color 0.4s, background-color 0.4s;
 }
 
 .App {
@@ -40,7 +42,7 @@ html {
 	width: 2px;
 }
 ::-webkit-scrollbar-track {
-	background: $bgLight;
+	background: var(--bgLight);
 }
 ::-webkit-scrollbar-thumb {
 	background: $sageGreen;
@@ -54,7 +56,9 @@ html {
 	margin-block: 0.5rem;
 	padding: 1rem;
 }
-
+.mh-30 {
+	max-height: 30%;
+}
 .dark {
 	background-color: $bgDark;
 	color: $bgLight;
@@ -103,7 +107,7 @@ html {
 		}
 	}
 	a:hover {
-		background-color: $bgLight;
+		background-color: var(--bgLight);
 		color: $sageGreen;
 		transition: all 0.3s;
 		border-radius: 0.5rem 0 0 0.5rem;
@@ -208,6 +212,10 @@ html {
 	overflow: hidden; /* Ensures the overflow text is hidden */
 	text-overflow: ellipsis; /* Adds an ellipsis to signify there's more text */
 }
+.recipeDescription {
+	overflow: auto;
+	padding-block: 0.5rem;
+}
 
 .dishImage {
 	max-width: 200px;
@@ -292,4 +300,7 @@ pre {
 	white-space: pre-wrap; /* Allows text to wrap */
 	word-wrap: break-word; /* Ensures that words do not overflow the container */
 	font-family: "Nunito", sans-serif; /* Optional: Sets font family */
+}
+.btn-no-caret::after {
+	display: none !important;
 }

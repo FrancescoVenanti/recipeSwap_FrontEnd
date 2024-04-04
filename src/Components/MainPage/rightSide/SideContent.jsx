@@ -18,7 +18,7 @@ const SideContent = () => {
 
 	return (
 		<div className="side-content pt-4">
-			<p className="text-dark m-0 fs-2 ">Most liked</p>
+			<p className="m-0 fs-2 ">Most liked</p>
 			<p className="text-green m-0 fs-1 lead mostLikedRecipes">Recipes</p>
 
 			{topLiked.map((recipe, index) => (

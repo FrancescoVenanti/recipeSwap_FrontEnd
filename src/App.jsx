@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./App.scss";
 import Authentication from "./Components/Auth/Authentication";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -11,6 +12,7 @@ import Favourites from "./Components/MainPage/Favourites/Favourites";
 import Messages from "./Components/MainPage/Messages/Messages";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import SideContent from "./Components/MainPage/rightSide/SideContent";
+import Search from "./Components/MainPage/Search/Search";
 
 function App() {
 	const constraintsRef = useRef(null);
@@ -31,7 +33,7 @@ function App() {
 							dragConstraints={constraintsRef}
 							dragElastic={0.1}
 							dragMomentum={true}
-							dragTransition={{ bounceDamping: 5 }}
+							dragTransition={{ bounceDamping: 10 }}
 							className="d-flex justify-content-center align-items-center "
 							onDragStart={() => {
 								setBgColor("#8ab24e"); // Replace 'draggingBgColor' with the color you want during drag
@@ -63,6 +65,14 @@ function App() {
 								element={
 									<ProtectedRoute>
 										<Discover />
+									</ProtectedRoute>
+								}
+							/>
+							<Route
+								path="/search/:query"
+								element={
+									<ProtectedRoute>
+										<Search />
 									</ProtectedRoute>
 								}
 							/>

@@ -1,11 +1,12 @@
-import imgPlaceholder from "../../../../assets/dishPlaceholder.jpg";
+import imgPlaceholder from "../../../../assets/dishPlaceholder.webp";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 import PropTypes from "prop-types";
 import FavoriteButton from "../../../GlobalComponents/FavoriteButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisVertical, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
 
 // Animation variants
 const variants = {
@@ -26,6 +27,7 @@ const variants = {
 
 const SingleRecipe = ({ recipe }) => {
 	console.log(recipe);
+	const user = useSelector((state) => state.auth.user);
 
 	// Effect hook to update local `isFavorited` state whenever the `favorites` state changes
 
@@ -51,21 +53,42 @@ const SingleRecipe = ({ recipe }) => {
 						className="rounded-2 dishImage p-2 White shadow"
 						style={{ maxWidth: "100%", height: "auto" }}
 					/>
+
 					{/* Text Container - Allow it to stack underneath on small screens */}
-					<div className="White p-2 rounded-2 shadow ms-md-2 mt-2 mt-md-0 w-100 h-100 no-line-break d-flex flex-column  ">
-						<div className="d-flex justify-content-between align-items-center">
+					<div className="White p-2 rounded-2 shadow ms-md-2 mt-2 mt-md-0 w-100 h-100  d-flex flex-column  ">
+						<div className="d-flex justify-content-between align-items-center mh-30">
 							<h2 className="no-line-break">{recipe.title}</h2>
-							<FavoriteButton recipe={recipe} />
+							{recipe.user.userId == user.id && (
+								<div className="dropdown">
+									<button
+										className="text-black bg-transparent border-0 fs-4 ms-auto dropdown-toggle btn-no-caret"
+										id="dropdownMenuButton"
+										data-bs-toggle="dropdown"
+										aria-expanded="false"
+									>
+										<FontAwesomeIcon icon={faEllipsisVertical} />
+									</button>
+									<ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+										<li>
+											<button className="dropdown-item">Modify</button>
+										</li>
+										<li>
+											<button className="dropdown-item">Delete</button>
+										</li>
+									</ul>
+								</div>
+							)}
 						</div>
 
-						<p className="m-0">{recipe.description}</p>
+						<p className="m-0 recipeDescription">{recipe.description}</p>
 						<p className="m-0 lead text-black-50 italic fs-6">Ingredients: {recipe.ingredients}</p>
 
 						<div className="mt-auto d-flex align-items-center ">
 							<button className="btn bg-transparent text-green">
-								<FontAwesomeIcon icon={faThumbsUp} className="fs-4 " />
+								<FontAwesomeIcon icon={faHeart} className="fs-4 text-highlight" />
 							</button>
-							<button className="btn-bland rounded-2 ms-4">Comments</button>
+							<FavoriteButton recipe={recipe} />
+							<button className="btn btn-outline-dark rounded-2 ms-3">Comments</button>
 						</div>
 					</div>
 				</div>

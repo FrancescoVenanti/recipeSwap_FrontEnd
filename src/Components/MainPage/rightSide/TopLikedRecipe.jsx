@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import imgPlaceholder from "../../../assets/dishPlaceholder.jpg";
+import imgPlaceholder from "../../../assets/dishPlaceholder.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import FavoriteButton from "../../../Components/GlobalComponents/FavoriteButton";
@@ -14,7 +14,7 @@ const TopLikedRecipe = ({ recipe, index }) => {
 				{/* Image Container - Make it full width on small screens and automatically adjust on larger screens */}
 				<div className={`rounded-2 position-relative`} onMouseLeave={() => setIsHovered(false)}>
 					<img
-						src={imgPlaceholder}
+						src={recipe.image ? recipe.image : imgPlaceholder}
 						alt={recipe.title}
 						className="rounded-2 dishImage p-2 White shadow"
 						style={{ maxWidth: "100%", height: "auto" }}

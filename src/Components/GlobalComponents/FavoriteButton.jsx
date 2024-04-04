@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { addFavorite, fetchFavorites } from "../../Redux/Slices/favoriteSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 
 const FavoriteButton = ({ recipe }) => {
 	const dispatch = useDispatch();
@@ -33,9 +33,9 @@ const FavoriteButton = ({ recipe }) => {
 	return (
 		<button onClick={() => handleFavorites()} className="btn bg-transparent fs-4">
 			{isFavorited ? (
-				<FontAwesomeIcon icon={faHeart} className="text-highlight" />
+				<FontAwesomeIcon icon={faBookmark} className="text-green" />
 			) : (
-				<FontAwesomeIcon icon={faHeart} />
+				<FontAwesomeIcon icon={faBookmark} />
 			)}
 		</button>
 	);
