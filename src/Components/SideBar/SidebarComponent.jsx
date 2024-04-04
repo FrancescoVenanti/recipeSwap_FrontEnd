@@ -17,7 +17,7 @@ import { useDispatch } from "react-redux";
 import ThemeToggle from "../GlobalComponents/ThemeToggle";
 
 // eslint-disable-next-line react/prop-types
-const SidebarComponent = ({ setIsNavOpen, bgColor }) => {
+const SidebarComponent = ({ setIsNavOpen }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
 	const dispatch = useDispatch();
@@ -55,10 +55,7 @@ const SidebarComponent = ({ setIsNavOpen, bgColor }) => {
 	};
 
 	return (
-		<div
-			style={{ backgroundColor: bgColor }}
-			className={`ms-2 sidebar rounded-3 pt-3 ps-2  ${isOpen ? "sideOpen" : "sideClose"}`}
-		>
+		<div className={`ms-2 sidebar  rounded-3 pt-3 ps-2  ${isOpen ? "sideOpen" : "sideClose"} White`}>
 			<div className="pb-3 d-flex flex-column justify-content-center align-items-center mb-2">
 				{isOpen ? (
 					<a className="fs-3 p-3 w-100 " onClick={handleToggleSidebar}>

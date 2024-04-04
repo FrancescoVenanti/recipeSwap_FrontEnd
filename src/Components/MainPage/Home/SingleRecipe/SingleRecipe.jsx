@@ -61,7 +61,7 @@ const SingleRecipe = ({ recipe }) => {
 							{recipe.user.userId == user.id && (
 								<div className="dropdown">
 									<button
-										className="text-black bg-transparent border-0 fs-4 ms-auto dropdown-toggle btn-no-caret"
+										className="text-bgdark bg-transparent border-0 fs-4 ms-auto dropdown-toggle btn-no-caret"
 										id="dropdownMenuButton"
 										data-bs-toggle="dropdown"
 										aria-expanded="false"
@@ -81,14 +81,14 @@ const SingleRecipe = ({ recipe }) => {
 						</div>
 
 						<p className="m-0 recipeDescription">{recipe.description}</p>
-						<p className="m-0 lead text-black-50 italic fs-6">Ingredients: {recipe.ingredients}</p>
+						<p className="m-0 lead text-bgdark italic fs-6">Ingredients: {recipe.ingredients}</p>
 
 						<div className="mt-auto d-flex align-items-center ">
 							<button className="btn bg-transparent text-green">
 								<FontAwesomeIcon icon={faHeart} className="fs-4 text-highlight" />
 							</button>
 							<FavoriteButton recipe={recipe} />
-							<button className="btn btn-outline-dark rounded-2 ms-3">Comments</button>
+							<button className="btn btn-outline-bgdark rounded-2 ms-3">Comments</button>
 						</div>
 					</div>
 				</div>

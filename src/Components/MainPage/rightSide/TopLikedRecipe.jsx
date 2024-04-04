@@ -22,8 +22,8 @@ const TopLikedRecipe = ({ recipe, index }) => {
 					/>
 					<p className={`num-award ${isHovered && "num-award-animation"}`}>{index + 1}°</p>
 					{isHovered && (
-						<div className="bg-white bg-opacity-75 p-2 rounded-2 shadow w-100 h-100 position-absolute top-0 end-0 me-1 text-center d-flex justify-content-center">
-							<h2 className="display-6 fs-4 my-auto">{recipe.title}</h2>
+						<div className="bg-white text-dark bg-opacity-75 p-2 rounded-2 shadow w-100 h-100 position-absolute top-0 end-0 me-1 text-center d-flex justify-content-center">
+							<h2 className="display-6 fs-4 my-auto fw-bold">{recipe.title}</h2>
 							<button className="btn bg-transparent fs-4 position-absolute ms-1 start-0 bottom-0 mb-1 text-green">
 								<FontAwesomeIcon icon={faThumbsUp} /> {recipe.likes}
 							</button>

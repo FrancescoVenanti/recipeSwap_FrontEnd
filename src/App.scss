@@ -8,7 +8,7 @@ $bgWhite: #ffffff;
 $dark-bgDark: #eeeeee; // For dark mode, invert the light mode colors
 $dark-bgLight: #373a36;
 
-:root {
+/* :root {
 	--bgDark: #373a36;
 	--bgLight: #eeeeee;
 	// Add your other light theme properties here...
@@ -19,6 +19,24 @@ $dark-bgLight: #373a36;
 	--bgDark: #eeeeee; // Dark theme overrides
 	--bgLight: #373a36;
 	// Add your other dark theme overrides here...
+} */
+
+:root {
+	--bgDark: #373a36;
+	--bgLight: #eeeeee;
+	--highlight: #ee4018;
+	--sageGreen: #8ab24e;
+	--warmBeige: #d5b69e;
+	--bgWhite: #ffffff;
+}
+
+[data-theme="dark"] {
+	--bgDark: #eeeeee; /* Originally the light background, now used for dark text */
+	--bgLight: #373a36; /* Originally the dark background, now used for dark theme background */
+	--highlight: #ee4018; /* No change, as it's a color that might not need inverting */
+	--sageGreen: #8ab24e; /* Consider adjusting if needed for better visibility in dark mode */
+	--warmBeige: #d5b69e; /* Consider adjusting if needed for better visibility in dark mode */
+	--bgWhite: #232529; /* A darker color for what was originally a light background */
 }
 
 // Removing overflow: hidden from global styles to allow for scrolling.
@@ -32,7 +50,17 @@ html {
 	overflow: hidden;
 	transition: color 0.4s, background-color 0.4s;
 }
-
+input,
+textarea {
+	font-family: "Nunito", sans-serif;
+	background-color: var(--bgWhite) !important;
+	color: var(--bgWhite) !important;
+	border: 1px solid var(--bgLight) !important;
+}
+input::placeholder,
+textarea::placeholder {
+	color: var(--bgDark) !important;
+}
 .App {
 	width: 100vw;
 	height: 100vh; // Keeping the app container full viewport height.
@@ -45,7 +73,7 @@ html {
 	background: var(--bgLight);
 }
 ::-webkit-scrollbar-thumb {
-	background: $sageGreen;
+	background: var(--sageGreen);
 }
 
 .contentContainer,
@@ -60,25 +88,28 @@ html {
 	max-height: 30%;
 }
 .dark {
-	background-color: $bgDark;
-	color: $bgLight;
+	background-color: var(--bgDark);
+	color: var(--bgLight);
 }
 .light {
-	background-color: $bgLight;
-	color: $bgDark;
+	background-color: var(--bgLight);
+	color: var(--bgDark);
 }
 .White {
-	background-color: $bgWhite;
-	color: $bgDark;
+	background-color: var(--bgWhite);
+	color: var(--bgDark);
 }
 .text-green {
-	color: $sageGreen;
+	color: var(--sageGreen);
+}
+.text-bgdark {
+	color: var(--bgDark);
 }
 .bg-green {
-	background-color: $sageGreen;
+	background-color: var(--sageGreen);
 }
 .text-highlight {
-	color: $highlight;
+	color: var(--highlight);
 }
 .divNoBordi {
 	width: 100vw;
@@ -91,14 +122,13 @@ html {
 	z-index: -1;
 }
 .sidebar {
-	background-color: $bgWhite;
 	z-index: 1000;
 	transition: width 0.6s;
 	text-wrap: nowrap;
 	overflow-x: hidden;
 
 	a {
-		color: $bgDark;
+		color: var(--bgDark);
 		text-decoration: none;
 		transition: all 1s;
 		transition: color 0.3s;
@@ -108,13 +138,13 @@ html {
 	}
 	a:hover {
 		background-color: var(--bgLight);
-		color: $sageGreen;
+		color: var(--sageGreen);
 		transition: all 0.3s;
 		border-radius: 0.5rem 0 0 0.5rem;
 	}
 	.sideProfile {
-		background-color: $bgDark;
-		color: #fff;
+		background-color: var(--bgDark);
+		color: var(--bgWhite);
 		margin-inline-end: -0.5rem;
 		border: none;
 		transition: all 0.3s;
@@ -137,8 +167,8 @@ html {
 		}
 	}
 	.sideProfile:hover {
-		background-color: $bgLight;
-		color: rgb(60, 175, 22);
+		background-color: var(--bgLight);
+		color: var(--sageGreen);
 		transform: scale(1.01);
 		transition: all 0.3s;
 	}
@@ -224,37 +254,48 @@ html {
 	object-fit: cover;
 }
 .btn-outline-green {
-	background-color: $bgWhite;
-	color: $sageGreen;
-	border: 1px solid $sageGreen;
+	background-color: var(--bgWhite);
+	color: var(--sageGreen);
+	border: 1px solid var(--sageGreen);
 	transition: all 0.3s;
 	&:hover {
-		background-color: $sageGreen;
-		color: $bgWhite;
+		background-color: var(--sageGreen);
+		color: var(--bgWhite);
+		transition: all 0.3s;
+	}
+}
+.btn-outline-bgdark {
+	background-color: var(--bgWhite);
+	color: var(--bgDark);
+	border: 1px solid var(--bgDark);
+	transition: all 0.3s;
+	&:hover {
+		background-color: var(--bgDark);
+		color: var(--bgWhite);
 		transition: all 0.3s;
 	}
 }
 .btn-outline-highline {
-	background-color: $bgWhite;
-	color: $highlight;
-	border: 1px solid $highlight;
+	background-color: var(--bgWhite);
+	color: var(--highlight);
+	border: 1px solid var(--highlight);
 	transition: all 0.3s;
 	&:hover {
-		background-color: $highlight;
-		color: $bgWhite;
+		background-color: var(--highlight);
+		color: var(--bgWhite);
 		transition: all 0.3s;
 	}
 }
 .btn-bland {
-	background-color: $warmBeige;
-	color: $bgWhite;
-	border: 1px solid $bgWhite;
+	background-color: var(--warmBeige);
+	color: var(--bgWhite);
+	border: 1px solid var(--bgWhite);
 	transition: all 0.3s;
 	&:hover {
-		background-color: $bgWhite;
-		color: $warmBeige;
+		background-color: var(--bgWhite);
+		color: var(--warmBeige);
 		transition: all 0.3s;
-		border: 1px solid $warmBeige;
+		border: 1px solid var(--warmBeige);
 	}
 }
 .mostLikedRecipes {
@@ -269,7 +310,7 @@ html {
 	transform: rotate(10deg); /* Specify the rotation degree if needed, 0deg if no rotation */
 	width: 60px; /* Fixed width */
 	height: 60px; /* Fixed height */
-	background-color: $sageGreen;
+	background-color: var(--sageGreen);
 	display: flex;
 	justify-content: center;
 	align-items: center;
