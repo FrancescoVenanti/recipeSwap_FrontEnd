@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchRecipes } from "../../../Redux/Slices/RecipesSlice";
@@ -7,6 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd, faMinus } from "@fortawesome/free-solid-svg-icons";
 import SingleRecipe from "./SingleRecipe/SingleRecipe";
+import AdComponent from "../../GlobalComponents/AdComponent";
 
 const Home = () => {
 	const [recipes, setRecipes] = useState([]);
@@ -44,7 +46,7 @@ const Home = () => {
 		<>
 			<div className=" h-100">
 				<h1 className="display-4">
-					Benvenuto <span className="text-green">{user.username}</span>
+					Hello, <span className="text-green">{user.username}</span>
 				</h1>
 				<div className="row g-4  overflow-x-hidden">
 					<div className="col-12">
@@ -79,8 +81,16 @@ const Home = () => {
 							</AnimatePresence>
 						</div>
 					</div>
-					{recipes.map((recipe) => (
-						<SingleRecipe key={recipe.recipeId} recipe={recipe} />
+					{recipes.map((recipe, index) => (
+						<React.Fragment key={index}>
+							<SingleRecipe key={recipe.recipeId} recipe={recipe} />
+							{/* todo forse togliere adcomponent */}
+							{(index + 1) % 3 === 0 && (
+								<div className="w-100">
+									<AdComponent />
+								</div>
+							)}
+						</React.Fragment>
 					))}
 					<div className="col-12 my-4">
 						<div className="d-flex justify-content-center">

@@ -13,8 +13,9 @@ import {
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom"; // Import Link
 import { logoutUser } from "../../Redux/Slices/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ThemeToggle from "../GlobalComponents/ThemeToggle";
+import userPlaceholder from "../../assets/userPlaceholder.png";
 
 // eslint-disable-next-line react/prop-types
 const SidebarComponent = ({ setIsNavOpen }) => {
@@ -53,6 +54,8 @@ const SidebarComponent = ({ setIsNavOpen }) => {
 			navigate(`/search/${searchQuery}`);
 		}
 	};
+
+	const user = useSelector((state) => state.auth.user);
 
 	return (
 		<div className={`ms-2 sidebar  rounded-3 pt-3 ps-2  ${isOpen ? "sideOpen" : "sideClose"} White`}>
@@ -126,18 +129,19 @@ const SidebarComponent = ({ setIsNavOpen }) => {
 				<ThemeToggle isOpen={isOpen} />
 			</div>
 
-			<div
+			<Link
+				to={`/User/${user.id}`}
 				className="p-2 w-100 mb-3 ms-2 d-flex align-items-center sideProfile"
 				onMouseEnter={handleHoverChange}
 				onMouseLeave={handleHoverChange}
 			>
 				{isOpen && <p className="m-0 fs-5">Username</p>}
 				<img
-					src="https://img.freepik.com/free-photo/young-man-wearing-blue-outfit-looking-confident_1298-291.jpg?size=338&ext=jpg"
+					src={user.profilePicture == null ? userPlaceholder : user.profilePicture}
 					alt="profile"
 					className={`rounded-circle ms-auto me-2 ${isHovered ? "imgHuge" : "imgSmall"}`}
 				/>
-			</div>
+			</Link>
 		</div>
 	);
 };

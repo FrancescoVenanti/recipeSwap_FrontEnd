@@ -7,6 +7,7 @@ import FavoriteButton from "../../../GlobalComponents/FavoriteButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 // Animation variants
 const variants = {
@@ -26,7 +27,6 @@ const variants = {
 };
 
 const SingleRecipe = ({ recipe }) => {
-	console.log(recipe);
 	const user = useSelector((state) => state.auth.user);
 
 	// Effect hook to update local `isFavorited` state whenever the `favorites` state changes
@@ -47,12 +47,14 @@ const SingleRecipe = ({ recipe }) => {
 			>
 				{/* Image Container - Make it full width on small screens and automatically adjust on larger screens */}
 				<div className="rounded-2 d-flex justify-content-center align-items-center flex-column flex-md-row recipeContainer ">
-					<img
-						src={recipe.image ? recipe.image : imgPlaceholder}
-						alt={recipe.title}
-						className="rounded-2 dishImage p-2 White shadow"
-						style={{ maxWidth: "100%", height: "auto" }}
-					/>
+					<Link to={`/Recipe/${recipe.recipeId}`} className="text-decoration-none p-0 m-0 h-100">
+						<img
+							src={recipe.image ? recipe.image : imgPlaceholder}
+							alt={recipe.title}
+							className="rounded-2 dishImage p-2 White shadow"
+							style={{ maxWidth: "100%", height: "auto", minWidth: "200px" }}
+						/>
+					</Link>
 
 					{/* Text Container - Allow it to stack underneath on small screens */}
 					<div className="White p-2 rounded-2 shadow ms-md-2 mt-2 mt-md-0 w-100 h-100  d-flex flex-column  ">
@@ -61,19 +63,19 @@ const SingleRecipe = ({ recipe }) => {
 							{recipe.user.userId == user.id && (
 								<div className="dropdown">
 									<button
-										className="text-bgdark bg-transparent border-0 fs-4 ms-auto dropdown-toggle btn-no-caret"
+										className="White border-0 fs-4 ms-auto dropdown-toggle btn-no-caret"
 										id="dropdownMenuButton"
 										data-bs-toggle="dropdown"
 										aria-expanded="false"
 									>
 										<FontAwesomeIcon icon={faEllipsisVertical} />
 									</button>
-									<ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-										<li>
-											<button className="dropdown-item">Modify</button>
+									<ul className="dropdown-menu light" aria-labelledby="dropdownMenuButton">
+										<li className="px-2 rounded-2">
+											<button className="dropdown-item light rounded-1">Modify</button>
 										</li>
-										<li>
-											<button className="dropdown-item">Delete</button>
+										<li className="px-2 rounded-1">
+											<button className="dropdown-item light rounded-1">Delete</button>
 										</li>
 									</ul>
 								</div>
@@ -88,7 +90,9 @@ const SingleRecipe = ({ recipe }) => {
 								<FontAwesomeIcon icon={faHeart} className="fs-4 text-highlight" />
 							</button>
 							<FavoriteButton recipe={recipe} />
-							<button className="btn btn-outline-bgdark rounded-2 ms-3">Comments</button>
+							<Link to={`/Recipe/${recipe.recipeId}`} className="text-decoration-none p-0 m-0">
+								<button className="btn btn-outline-bgdark rounded-2 ms-3">Comments</button>
+							</Link>
 						</div>
 					</div>
 				</div>

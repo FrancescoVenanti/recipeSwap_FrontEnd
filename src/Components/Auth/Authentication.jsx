@@ -28,12 +28,15 @@ const Authentication = ({ setIsLogged }) => {
 				{accedi ? <Login setIsLogged={setIsLogged} /> : <Register />}
 				<div className="d-flex align-items-center bg-white rounded-2 mt-2">
 					{accedi ? (
-						<p className="m-0 p-2">Non hai un account?</p>
+						<p className="m-0 p-2">You dont have an ccount?</p>
 					) : (
-						<p className="m-0 p-2">Hai già un account?</p>
+						<p className="m-0 p-2">You already have an account?</p>
 					)}
-					<button className="fw-bold fs-4 border-0 m-0 p-2 bg-transparent" onClick={() => setAccedi(!accedi)}>
-						{accedi ? "Registrati" : "Accedi"}
+					<button
+						className="fw-bold fs-4 border-0 m-0 p-2 bg-transparent text-dark"
+						onClick={() => setAccedi(!accedi)}
+					>
+						{accedi ? "Register" : "Login"}
 					</button>
 				</div>
 			</div>

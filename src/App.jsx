@@ -13,40 +13,35 @@ import Messages from "./Components/MainPage/Messages/Messages";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import SideContent from "./Components/MainPage/rightSide/SideContent";
 import Search from "./Components/MainPage/Search/Search";
+import RecipeView from "./Components/MainPage/Home/RecipeView/RecipeView";
+import UserProfile from "./Components/MainPage/UserProfile/UserProfile";
 
 function App() {
 	const constraintsRef = useRef(null);
 	const [isLogged, setIsLogged] = useState(true);
 	const [isNavOpen, setIsNavOpen] = useState(false);
-	const [bgColor, setBgColor] = useState("#fff");
 	return (
 		<Router>
 			<motion.div className={`App divNoBordi ${isLogged && "container"}`} ref={constraintsRef}>
 				<div className="row">
 					<div
 						className={`${
-							isLogged ? "col flex-grow-0 vh-100 p-0 pe-1" : "d-none"
-						} d-flex justify-content-center align-items-center`}
+							isLogged ? "col flex-grow-0 p-0" : "d-none"
+						} d-flex justify-content-center align-items-center mt-0 ${isNavOpen && ""}`}
 					>
 						<motion.div
-							drag
+							/* drag
 							dragConstraints={constraintsRef}
 							dragElastic={0.1}
 							dragMomentum={true}
-							dragTransition={{ bounceDamping: 10 }}
+							dragTransition={{ bounceDamping: 10 }} */
 							className="d-flex justify-content-center align-items-center "
-							onDragStart={() => {
-								setBgColor("#8ab24e"); // Replace 'draggingBgColor' with the color you want during drag
-							}}
-							onDragEnd={() => {
-								setBgColor("#fff"); // Reset to the initial color
-							}}
 						>
-							<SidebarComponent setIsNavOpen={setIsNavOpen} bgColor={bgColor} />
+							<SidebarComponent setIsNavOpen={setIsNavOpen} />
 						</motion.div>
 					</div>
 					<div
-						className={`${isLogged ? "col flex-grow-1 contentContainer rounded-4" : ""} ${
+						className={`${isLogged ? "col flex-grow-1 mt-0 contentContainer rounded-4" : ""} ${
 							isNavOpen && "d-none d-sm-block"
 						} `}
 					>
@@ -89,6 +84,22 @@ function App() {
 								element={
 									<ProtectedRoute>
 										<Messages />
+									</ProtectedRoute>
+								}
+							/>
+							<Route
+								path="/Recipe/:id"
+								element={
+									<ProtectedRoute>
+										<RecipeView />
+									</ProtectedRoute>
+								}
+							/>
+							<Route
+								path="/User/:id"
+								element={
+									<ProtectedRoute>
+										<UserProfile />
 									</ProtectedRoute>
 								}
 							/>

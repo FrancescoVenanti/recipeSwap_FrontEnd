@@ -54,7 +54,7 @@ input,
 textarea {
 	font-family: "Nunito", sans-serif;
 	background-color: var(--bgWhite) !important;
-	color: var(--bgWhite) !important;
+	color: var(--bgDark) !important;
 	border: 1px solid var(--bgLight) !important;
 }
 input::placeholder,
@@ -111,6 +111,9 @@ textarea::placeholder {
 .text-highlight {
 	color: var(--highlight);
 }
+.text-beige {
+	color: var(--warmBeige);
+}
 .divNoBordi {
 	width: 100vw;
 	height: 100vh;
@@ -126,6 +129,7 @@ textarea::placeholder {
 	transition: width 0.6s;
 	text-wrap: nowrap;
 	overflow-x: hidden;
+	border: 2px solid var(--bgLight);
 
 	a {
 		color: var(--bgDark);
@@ -189,7 +193,6 @@ textarea::placeholder {
 	}
 	.sidebar {
 		margin: 0 !important;
-
 		height: 100vh; /* Set height to 100% of the viewport height on mobile */
 	}
 }
@@ -202,6 +205,15 @@ textarea::placeholder {
 	background-attachment: fixed;
 	width: 100vw;
 	height: 100vh;
+	input {
+		color: $bgDark !important;
+		background-color: $bgWhite !important;
+		border: 1px solid $bgDark !important;
+		&::placeholder {
+			color: $bgDark !important;
+		}
+	}
+
 	.registerPos {
 		position: absolute;
 		top: 50%;
@@ -244,6 +256,7 @@ textarea::placeholder {
 }
 .recipeDescription {
 	overflow: auto;
+	max-height: 4rem;
 	padding-block: 0.5rem;
 }
 
@@ -344,4 +357,7 @@ pre {
 }
 .btn-no-caret::after {
 	display: none !important;
+}
+.comments {
+	width: 100%;
 }

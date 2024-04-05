@@ -35,7 +35,7 @@ const FavoriteButton = ({ recipe }) => {
 			{isFavorited ? (
 				<FontAwesomeIcon icon={faBookmark} className="text-green" />
 			) : (
-				<FontAwesomeIcon icon={faBookmark} />
+				<FontAwesomeIcon icon={faBookmark} className="White" />
 			)}
 		</button>
 	);
