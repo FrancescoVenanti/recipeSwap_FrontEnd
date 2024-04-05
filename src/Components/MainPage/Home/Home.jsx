@@ -8,7 +8,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd, faMinus } from "@fortawesome/free-solid-svg-icons";
 import SingleRecipe from "./SingleRecipe/SingleRecipe";
-import AdComponent from "../../GlobalComponents/AdComponent";
+/* import AdComponent from "../../GlobalComponents/AdComponent"; */
+import FakeAdComponent from "../../GlobalComponents/FakeAdComponent";
 
 const Home = () => {
 	const [recipes, setRecipes] = useState([]);
@@ -87,7 +88,9 @@ const Home = () => {
 							{/* todo forse togliere adcomponent */}
 							{(index + 1) % 3 === 0 && (
 								<div className="w-100">
-									<AdComponent />
+									{/* todo change */}
+									<FakeAdComponent width="100%" height="150px" />
+									{/* <AdComponent /> */}
 								</div>
 							)}
 						</React.Fragment>

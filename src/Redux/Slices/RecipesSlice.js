@@ -4,7 +4,7 @@ import fetchWithToken from "../interceptor";
 export const fetchRecipes = createAsyncThunk("recipes/fetchRecipes", async (token, { rejectWithValue }) => {
 	try {
 		const response = await fetchWithToken("https://localhost:7026/api/Recipes", token);
-		console.log("Token:", token);
+
 		const recipes = await response.json();
 		if (response.ok) {
 			console.log(recipes);

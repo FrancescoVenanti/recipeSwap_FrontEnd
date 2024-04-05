@@ -106,9 +106,11 @@ function App() {
 							{/* Add more routes as needed */}
 						</Routes>
 					</div>
-					<div className="col-3 me-2 overflow-y-auto vh-100 d-none d-lg-flex">
-						{/* Add more side content here as needed */}
-						{/* generate 3 boxes in column */}
+					<div
+						className={`col-3 me-2 overflow-y-auto d-none vh-100 ${
+							isNavOpen ? "d-lg-none d-xxl-flex" : "d-lg-flex "
+						}`} // Corrected visibility logic
+					>
 						<div className="h-100">
 							<SideContent />
 						</div>

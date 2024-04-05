@@ -14,7 +14,6 @@ const SideContent = () => {
 
 	// Use useSelector to access the topLiked recipes from the Redux state
 	const topLiked = useSelector((state) => state.topLiked.recipes || []);
-	console.log(useSelector((state) => state.topLiked.recipes));
 
 	return (
 		<div className="side-content pt-4">

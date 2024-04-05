@@ -5,8 +5,10 @@ import { useRef } from "react";
 import SingleRecipe from "../Home/SingleRecipe/SingleRecipe";
 
 const UserProfile = () => {
+	//TODO change: dispatch all the users, confront it with the user id and then use that user
 	const user = useSelector((state) => state.auth.user);
 	const recipe = useSelector((state) => state.recipes.recipes);
+
 	const fileInputRef = useRef(null);
 
 	const handleProfilePictureClick = () => {
@@ -29,7 +31,7 @@ const UserProfile = () => {
 						Name: {user.firstName} {user.lastName}
 					</p>
 					<p className="">Kiwi member since: {user.registrationDate}</p>
-					<p className={` ${user.verifiedEmail ? "text-success" : "text-danger"}`}>
+					<p className={` ${user.verifiedEmail ? "text-green" : "text-highlist"}`}>
 						Email: {user.email} {/* {user.verifiedEmail ? "verified" : "not verified"} */}
 					</p>
 					<p className="">
