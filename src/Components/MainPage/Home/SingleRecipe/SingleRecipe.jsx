@@ -5,9 +5,10 @@ import { useInView } from "react-intersection-observer";
 import PropTypes from "prop-types";
 import FavoriteButton from "../../../GlobalComponents/FavoriteButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisVertical, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Likes from "../../../GlobalComponents/Likes";
 
 // Animation variants
 const variants = {
@@ -86,9 +87,7 @@ const SingleRecipe = ({ recipe }) => {
 						<p className="m-0 lead text-bgdark italic fs-6">Ingredients: {recipe.ingredients}</p>
 
 						<div className="mt-auto d-flex align-items-center ">
-							<button className="btn bg-transparent text-green">
-								<FontAwesomeIcon icon={faHeart} className="fs-4 text-highlight" />
-							</button>
+							<Likes recipe={recipe} />
 							<FavoriteButton recipe={recipe} />
 							<Link to={`/Recipe/${recipe.recipeId}`} className="text-decoration-none p-0 m-0">
 								<button className="btn btn-outline-bgdark rounded-2 ms-3">Comments</button>

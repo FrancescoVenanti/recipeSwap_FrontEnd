@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFavorites } from "../../../Redux/Slices/favoriteSlice";
+import SingleRecipe from "../Home/SingleRecipe/SingleRecipe";
 
 const Favourites = () => {
 	const dispatch = useDispatch();
@@ -11,8 +12,6 @@ const Favourites = () => {
 	useEffect(() => {
 		if (userId && token) {
 			dispatch(fetchFavorites({ userId, token }));
-			console.log("aaaa");
-			console.log(items);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dispatch, userId, token]);
@@ -20,15 +19,19 @@ const Favourites = () => {
 	if (status === "loading") return <div>Loading...</div>;
 
 	return (
-		<div>
-			<h1>Wishlist</h1>
-			<ul>
+		<div className="mt-2">
+			<h1>Favourites</h1>
+			<div className="row g-2">
 				{items.length === 0 ? (
-					<li>No items in wishlist</li>
+					<p>Click on the bookmark to keep all your favourite recipes safe.</p>
 				) : (
-					items.map((item) => <li key={item.favoriteId}>{item.recipe.title}</li>)
+					items.map((item) => (
+						<div key={item.recipeId} className="col-12">
+							<SingleRecipe recipe={item.recipe} />
+						</div>
+					))
 				)}
-			</ul>
+			</div>
 		</div>
 	);
 };

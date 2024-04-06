@@ -37,7 +37,9 @@ function App() {
 							dragTransition={{ bounceDamping: 10 }} */
 							className="d-flex justify-content-center align-items-center "
 						>
-							<SidebarComponent setIsNavOpen={setIsNavOpen} />
+							<ProtectedRoute>
+								<SidebarComponent setIsNavOpen={setIsNavOpen} />
+							</ProtectedRoute>
 						</motion.div>
 					</div>
 					<div
