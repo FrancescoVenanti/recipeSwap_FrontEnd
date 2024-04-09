@@ -14,8 +14,9 @@ const Login = ({ setIsLogged }) => {
 		e.preventDefault();
 		try {
 			await dispatch(loginUser({ username, pswHash })).unwrap();
-			setIsLogged(true);
-			navigate("/");
+
+			await setIsLogged(true);
+			await navigate("/");
 		} catch (e) {
 			console.log(e);
 		}

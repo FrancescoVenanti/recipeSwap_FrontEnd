@@ -1,5 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+const UPDATE_USER_PROFILE_PICTURE = "user/updateProfilePicture";
+
+export const updateUserProfilePicture = (profilePicUrl) => ({
+	type: UPDATE_USER_PROFILE_PICTURE,
+	payload: profilePicUrl,
+});
+
 // Async thunk per la registrazione
 export const registerUser = createAsyncThunk("auth/register", async (userData, thunkAPI) => {
 	try {
@@ -88,6 +95,9 @@ export const authSlice = createSlice({
 			state.isError = false;
 			state.isSuccess = false;
 			state.message = "";
+		},
+		updateUserProfilePicture: (state, action) => {
+			if (state.user) state.user.profilePicture = action.payload;
 		},
 	},
 	extraReducers: (builder) => {

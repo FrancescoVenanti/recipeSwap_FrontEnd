@@ -13,7 +13,6 @@ const Favourites = () => {
 		if (userId && token) {
 			dispatch(fetchFavorites({ userId, token }));
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dispatch, userId, token]);
 
 	if (status === "loading") return <div>Loading...</div>;

@@ -5,6 +5,10 @@ import userPlaceholder from "../../../../assets/userPlaceholder.png";
 import Comment from "./Comment";
 import { useEffect } from "react";
 import { fetchRecipes } from "../../../../Redux/Slices/RecipesSlice";
+import Likes from "../../../GlobalComponents/Likes";
+import FavoriteButton from "../../../GlobalComponents/FavoriteButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 const RecipeView = () => {
 	const allRecipes = useSelector((state) => state.recipes.recipes);
@@ -20,12 +24,28 @@ const RecipeView = () => {
 
 	return (
 		<div className="text-center">
-			<h2 className="display-4 text-green text-start">{recipe.title}</h2>
+			<h2 className="display-4 text-green text-start me-3">{recipe.title}</h2>
+
+			<div className="d-flex align-items-center">
+				<div className=" ms-1 d-flex align-items-center mb-1 me-auto">
+					<img
+						src={recipe.user.profilePicture ? recipe.user.profilePicture : userPlaceholder}
+						alt="user profile picture"
+						className="img-fluid "
+						style={{ width: "36px", height: "36px", borderRadius: "50%" }}
+					/>
+
+					<p className="m-0 ms-2 fs-5 me-2">{recipe.user.username}</p>
+					{recipe.user.userId !== user.id && <FontAwesomeIcon icon={faUserPlus} />}
+				</div>
+				<Likes recipe={recipe} />
+				<FavoriteButton recipe={recipe} />
+			</div>
 			<div className="shadow overflow-hidden w-100 rounded-3 mt-2">
 				<motion.img
 					src={recipe.image == "" ? imgPlaceholder : recipe.image}
 					alt={recipe.title}
-					className="img-fluid"
+					className="img-fluid w-100"
 					whileHover={{ scale: 1.5 }} // Adjust scale value as needed
 					transition={{ duration: 0.3 }}
 				/>

@@ -37,6 +37,26 @@ export const postRecipe = createAsyncThunk("recipes/postRecipe", async ({ token,
 	}
 });
 
+export const deleteRecipe = createAsyncThunk(
+	"recipes/deleteRecipe",
+	async ({ token, recipeId }, { rejectWithValue }) => {
+		try {
+			const response = await fetchWithToken(`https://localhost:7026/api/Recipes/${recipeId}`, token, {
+				method: "DELETE",
+			});
+			// No need to parse the response, as it will be empty if successful
+			if (response.ok) {
+				return recipeId;
+			} else {
+				return rejectWithValue("Failed to delete recipe");
+			}
+		} catch (error) {
+			console.error("Error:", error);
+			return rejectWithValue(error.toString());
+		}
+	}
+);
+
 export const RecipesSlice = createSlice({
 	name: "recipes",
 	initialState: {
@@ -74,6 +94,20 @@ export const RecipesSlice = createSlice({
 			})
 			.addCase(postRecipe.rejected, (state, action) => {
 				// Handle failed post
+				state.isError = true;
+				state.errorMessage = action.payload;
+			})
+			// Handling deleteRecipe async actions
+			.addCase(deleteRecipe.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(deleteRecipe.fulfilled, (state, action) => {
+				// Handle successful recipe deletion
+				// Remove the deleted recipe from your state
+				state.recipes = state.recipes.filter((recipe) => recipe.recipeId !== action.payload);
+			})
+			.addCase(deleteRecipe.rejected, (state, action) => {
+				// Handle failed deletion
 				state.isError = true;
 				state.errorMessage = action.payload;
 			});

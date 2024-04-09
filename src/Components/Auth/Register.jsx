@@ -16,7 +16,7 @@ const Register = () => {
 	});
 	const dispatch = useDispatch();
 	const { isLoading, isError, message } = useSelector((state) => state.auth);
-
+	console.log(isLoading, isError, message);
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const userData = {

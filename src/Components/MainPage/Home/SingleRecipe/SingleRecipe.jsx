@@ -1,14 +1,15 @@
 import imgPlaceholder from "../../../../assets/dishPlaceholder.webp";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-
+import userPlaceholder from "../../../../assets/userPlaceholder.png";
 import PropTypes from "prop-types";
 import FavoriteButton from "../../../GlobalComponents/FavoriteButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from "react-redux";
+import { faEllipsisVertical, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Likes from "../../../GlobalComponents/Likes";
+import { deleteRecipe } from "../../../../Redux/Slices/RecipesSlice";
 
 // Animation variants
 const variants = {
@@ -29,13 +30,23 @@ const variants = {
 
 const SingleRecipe = ({ recipe }) => {
 	const user = useSelector((state) => state.auth.user);
-
+	const token = useSelector((state) => state.auth.token);
+	console.log(recipe);
 	// Effect hook to update local `isFavorited` state whenever the `favorites` state changes
 
+	const dispatch = useDispatch();
 	const { ref, inView } = useInView({
 		triggerOnce: true,
 		threshold: 0.1,
 	});
+
+	const handleDelete = async () => {
+		const recipeId = recipe.recipeId;
+		console.log("Deleting recipe", recipeId);
+		dispatch(deleteRecipe({ token, recipeId }));
+		//reload page
+		window.location.reload();
+	};
 
 	return (
 		<>
@@ -47,6 +58,17 @@ const SingleRecipe = ({ recipe }) => {
 				className="col-12"
 			>
 				{/* Image Container - Make it full width on small screens and automatically adjust on larger screens */}
+				<div className=" ms-1 d-flex align-items-center mb-1">
+					<img
+						src={recipe.user.profilePicture ? recipe.user.profilePicture : userPlaceholder}
+						alt="user profile picture"
+						className="img-fluid"
+						style={{ width: "36px", height: "36px", borderRadius: "50%" }}
+					/>
+
+					<p className="m-0 ms-2 fs-5 me-2">{recipe.user.username}</p>
+					{recipe.user.userId !== user.id && <FontAwesomeIcon icon={faUserPlus} />}
+				</div>
 				<div className="rounded-2 d-flex justify-content-center align-items-center flex-column flex-md-row recipeContainer ">
 					<Link to={`/Recipe/${recipe.recipeId}`} className="text-decoration-none p-0 m-0 h-100">
 						<img
@@ -73,10 +95,14 @@ const SingleRecipe = ({ recipe }) => {
 									</button>
 									<ul className="dropdown-menu light" aria-labelledby="dropdownMenuButton">
 										<li className="px-2 rounded-2">
-											<button className="dropdown-item light rounded-1">Modify</button>
+											<button className="dropdown-item light rounded-1" disabled>
+												Modify
+											</button>
 										</li>
 										<li className="px-2 rounded-1">
-											<button className="dropdown-item light rounded-1">Delete</button>
+											<button className="dropdown-item light rounded-1" onClick={handleDelete}>
+												Delete
+											</button>
 										</li>
 									</ul>
 								</div>

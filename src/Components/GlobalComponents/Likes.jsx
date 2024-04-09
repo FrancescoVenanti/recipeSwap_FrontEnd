@@ -1,18 +1,27 @@
-/* eslint-disable react/prop-types */
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
-import { faHeart as fasFaHeart } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as fasFaHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as farFaHeart } from "@fortawesome/free-regular-svg-icons";
+
+import PropTypes from "prop-types";
 
 const Likes = ({ recipe }) => {
-	console.log(recipe);
 	const userId = useSelector((state) => state.auth.user.id);
-	console.log(userId);
-	const [isLiked, setIsLiked] = useState(recipe.likes.some((like) => like.userId === userId));
+
+	const [isLiked, setIsLiked] = useState(
+		Array.isArray(recipe.likes) ? recipe.likes.some((like) => like.userId === userId) : false
+	);
+
+	const [animate, setAnimate] = useState(false);
 	const token = useSelector((state) => state.auth.token);
+	const [totLikes, setTotLikes] = useState(recipe.likesCount);
 
 	const handleLike = async () => {
+		// Trigger animation
+		setAnimate(true);
+		setTimeout(() => setAnimate(false), 400); // Duration should match CSS animation
+
 		try {
 			const response = await fetch(
 				`https://localhost:7026/api/Likes/?userId=${userId}&ProductId=${recipe.recipeId}`,
@@ -20,7 +29,7 @@ const Likes = ({ recipe }) => {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`, // Assuming you're using Bearer token authentication
+						Authorization: `Bearer ${token}`,
 					},
 				}
 			);
@@ -31,25 +40,32 @@ const Likes = ({ recipe }) => {
 				throw new Error(data.message || "Could not toggle like");
 			}
 			setIsLiked(!isLiked);
-			// Handle successful like toggle here
-			// For example, you might want to update component state to reflect the like status
 			console.log("Success:", data.message);
+			if (data.message === "Like rimosso.") {
+				setTotLikes(totLikes - 1);
+			} else {
+				setTotLikes(totLikes + 1);
+			}
 		} catch (error) {
 			console.error("Error:", error.message);
-			// Optionally handle the error, such as displaying an error message to the user
 		}
 	};
 
 	return (
-		<div>
-			<button className="btn bg-transparent text-green" onClick={handleLike}>
-				{isLiked ? (
-					<FontAwesomeIcon icon={fasFaHeart} className="fs-4 text-highlight" />
-				) : (
-					<FontAwesomeIcon icon={faHeart} className="fs-4 text-highlight " />
-				)}
+		<div className="d-flex align-items-center me-3">
+			<button className="btn bg-transparent text-green p-1" onClick={handleLike}>
+				<FontAwesomeIcon
+					icon={isLiked ? fasFaHeart : farFaHeart}
+					className={`fs-4 text-highlight ${animate ? "heart-pop" : ""}`}
+				/>
 			</button>
+			<p className="m-0 fs-5 white">{totLikes}</p>
 		</div>
 	);
 };
+
+Likes.propTypes = {
+	recipe: PropTypes.object.isRequired,
+};
+
 export default Likes;

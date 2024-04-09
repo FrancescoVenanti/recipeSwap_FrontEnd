@@ -6,20 +6,19 @@ import { logoutUser } from "../../Redux/Slices/authSlice";
 
 // eslint-disable-next-line react/prop-types
 const Authentication = ({ setIsLogged }) => {
-	const token = useSelector((state) => state.auth.token);
-	console.log(token);
-
 	const user = useSelector((state) => state.auth.user);
 
 	const dispatch = useDispatch();
 	useEffect(() => {
+		console.log("secondo");
 		if (user == null) {
+			console.log("null");
 			dispatch(logoutUser());
 		} else {
 			console.log(user);
 		}
 		setIsLogged(false);
-	}, [user, dispatch, setIsLogged]); // Add dependencies here
+	}, [dispatch, setIsLogged, user]); // Add dependencies here
 	const [accedi, setAccedi] = useState(true);
 
 	return (

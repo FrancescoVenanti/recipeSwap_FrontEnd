@@ -15,11 +15,13 @@ import SideContent from "./Components/MainPage/rightSide/SideContent";
 import Search from "./Components/MainPage/Search/Search";
 import RecipeView from "./Components/MainPage/Home/RecipeView/RecipeView";
 import UserProfile from "./Components/MainPage/UserProfile/UserProfile";
+import { useSelector } from "react-redux";
 
 function App() {
 	const constraintsRef = useRef(null);
 	const [isLogged, setIsLogged] = useState(true);
 	const [isNavOpen, setIsNavOpen] = useState(false);
+	const user = useSelector((state) => state.auth.user);
 	return (
 		<Router>
 			<motion.div className={`App divNoBordi ${isLogged && "container"}`} ref={constraintsRef}>
@@ -29,18 +31,18 @@ function App() {
 							isLogged ? "col flex-grow-0 p-0" : "d-none"
 						} d-flex justify-content-center align-items-center mt-0 ${isNavOpen && ""}`}
 					>
-						<motion.div
-							/* drag
+						{user && (
+							<motion.div
+								/* drag
 							dragConstraints={constraintsRef}
 							dragElastic={0.1}
 							dragMomentum={true}
 							dragTransition={{ bounceDamping: 10 }} */
-							className="d-flex justify-content-center align-items-center "
-						>
-							<ProtectedRoute>
+								className="d-flex justify-content-center align-items-center "
+							>
 								<SidebarComponent setIsNavOpen={setIsNavOpen} />
-							</ProtectedRoute>
-						</motion.div>
+							</motion.div>
+						)}
 					</div>
 					<div
 						className={`${isLogged ? "col flex-grow-1 mt-0 contentContainer rounded-4" : ""} ${
@@ -48,7 +50,10 @@ function App() {
 						} `}
 					>
 						<Routes>
-							<Route path="/Authentication" element={<Authentication setIsLogged={setIsLogged} />} />
+							<Route
+								path="/Authentication"
+								element={<Authentication isLogged={isLogged} setIsLogged={setIsLogged} />}
+							/>
 							<Route
 								path="/"
 								element={
@@ -108,10 +113,13 @@ function App() {
 							{/* Add more routes as needed */}
 						</Routes>
 					</div>
+
 					<div
-						className={`col-3 me-2 overflow-y-auto d-none vh-100 ${
+						className={`${
+							isLogged ? "col flex-grow-0 p-0" : "d-none"
+						} col-3 me-2 overflow-y-auto d-none vh-100 ${
 							isNavOpen ? "d-lg-none d-xxl-flex" : "d-lg-flex "
-						}`} // Corrected visibility logic
+						} `} // Corrected visibility logic
 					>
 						<div className="h-100">
 							<SideContent />

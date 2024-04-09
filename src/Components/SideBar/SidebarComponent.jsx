@@ -130,6 +130,7 @@ const SidebarComponent = ({ setIsNavOpen }) => {
 			</div>
 
 			<Link
+				//
 				to={`/User/${user.id}`}
 				className="p-2 w-100 mb-3 ms-2 d-flex align-items-center sideProfile"
 				onMouseEnter={handleHoverChange}

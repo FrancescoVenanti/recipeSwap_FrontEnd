@@ -1,22 +1,60 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { useRef } from "react";
 import SingleRecipe from "../Home/SingleRecipe/SingleRecipe";
+import { updateUserProfilePicture } from "../../../Redux/Slices/authSlice";
 
 const UserProfile = () => {
 	//TODO change: dispatch all the users, confront it with the user id and then use that user
+
 	const user = useSelector((state) => state.auth.user);
+
 	const recipe = useSelector((state) => state.recipes.recipes);
+	const token = useSelector((state) => state.auth.token);
+	const dispatch = useDispatch();
 
 	const fileInputRef = useRef(null);
 
 	const handleProfilePictureClick = () => {
 		fileInputRef.current.click(); // Trigger file input when profile picture is clicked
 	};
-	const handleFileChange = (event) => {
+	const handleFileChange = async (event) => {
 		const file = event.target.files[0];
-		console.log(file);
+		if (!file) return;
+
+		const formData = new FormData();
+		formData.append("image", file);
+
+		// Assuming you store the access token in the Redux state as well
+
+		try {
+			const response = await fetch(`https://localhost:7026/api/Users/updateProfilePicture/${user.id}`, {
+				method: "POST",
+				body: formData,
+				headers: {
+					// If your backend expects a bearer token for authentication,
+					// you should include it in the request headers.
+					Authorization: `Bearer ${token}`,
+				},
+			});
+			console.log(response);
+			if (!response.ok) {
+				throw new Error("Network response was not ok");
+			}
+
+			const updatedUser = await response.json();
+			console.log(updatedUser);
+			await dispatch(updateUserProfilePicture(updatedUser.profilePicture));
+
+			console.log(user.profilePicture);
+			//reload the page
+
+			alert("Profile picture updated successfully");
+		} catch (error) {
+			console.error("Error:", error);
+			alert("Failed to upload the image");
+		}
 	};
 
 	const userRecipes = recipe.filter((recipe) => recipe.user.userId === user.id);
@@ -41,10 +79,16 @@ const UserProfile = () => {
 
 				<img
 					src={user.profilePicture || defaultProfilePicture}
-					className="ms-md-auto mx-auto mx-md-0 mt-3 imgfluid rounded-circle mw-100 order-first order-md-last mb-3 mb-md-0"
+					className="ms-md-auto mx-auto mx-md-0 mt-3 imgfluid rounded-circle order-first order-md-last mb-3 mb-md-0 border border-3 border-green"
 					alt="Profile"
 					onClick={handleProfilePictureClick}
-					style={{ cursor: "pointer" }}
+					style={{
+						cursor: "pointer",
+						maxWidth: "350px",
+						maxHeight: "350px",
+						aspectRatio: "1/1",
+						objectFit: "cover",
+					}}
 				/>
 				<input
 					type="file"
