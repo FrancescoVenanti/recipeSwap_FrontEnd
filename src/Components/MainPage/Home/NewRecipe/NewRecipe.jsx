@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { FormGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { postRecipe } from "../../../../Redux/Slices/RecipesSlice"; // Update the import path as needed
+import { fetchRecipes, postRecipe } from "../../../../Redux/Slices/RecipesSlice"; // Update the import path as needed
 
-const NewRecipe = () => {
+import PropTypes from "prop-types";
+const NewRecipe = ({ setOpenRecipe }) => {
 	const token = useSelector((state) => state.auth.token);
 	console.log("token ", token);
 	const userId = useSelector((state) => state.auth.user.id);
 	console.log("user ", userId);
+	const { isLoading } = useSelector((state) => state.recipes);
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [ingredients, setIngredients] = useState("");
@@ -47,7 +49,16 @@ const NewRecipe = () => {
 
 		console.log("Submitting recipe...");
 		// Adjust the action to handle FormData
-		dispatch(postRecipe({ token, recipeData: formData }));
+		dispatch(postRecipe({ token, recipeData: formData }))
+			.then(() => {
+				// close the form after successful post
+				setOpenRecipe(false);
+				// Fetch updated recipes
+			})
+			.then(() => {
+				dispatch(fetchRecipes(token));
+				//reload page
+			});
 	};
 
 	return (
@@ -102,7 +113,7 @@ const NewRecipe = () => {
 
 					{/* <input type="file" className="form-control mt-2" /> Placeholder for future image upload */}
 					<button type="submit" className="btn btn-outline-green mt-2">
-						Create Recipe
+						{isLoading ? "Loading..." : "Create Recipe"}
 					</button>
 				</div>
 			</form>
@@ -111,3 +122,7 @@ const NewRecipe = () => {
 };
 
 export default NewRecipe;
+
+NewRecipe.propTypes = {
+	setOpenRecipe: PropTypes.func.isRequired,
+};

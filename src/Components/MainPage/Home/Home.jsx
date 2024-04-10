@@ -12,11 +12,11 @@ import SingleRecipe from "./SingleRecipe/SingleRecipe";
 import FakeAdComponent from "../../GlobalComponents/FakeAdComponent";
 
 const Home = () => {
-	const [recipes, setRecipes] = useState([]);
+	const dispatch = useDispatch();
+
 	const [openRecipe, setOpenRecipe] = useState(false);
 	const user = useSelector((state) => state.auth.user);
 	const token = useSelector((state) => state.auth.token);
-	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const containerVariants = {
 		hidden: { opacity: 0, height: 0, overflow: "hidden", transition: { duration: 0.5 } },
@@ -30,14 +30,14 @@ const Home = () => {
 			},
 		},
 	};
-
+	const recipes = useSelector((state) => state.recipes.recipes);
 	useEffect(() => {
 		if (user == null) {
 			navigate("/Authentication");
 		} else if (token) {
 			dispatch(fetchRecipes(token)).then((action) => {
 				if (action.type.endsWith("fulfilled")) {
-					setRecipes(action.payload);
+					console.log("Recipes fetched successfully");
 				}
 			});
 		}
@@ -76,7 +76,7 @@ const Home = () => {
 										variants={containerVariants}
 										className="shadow"
 									>
-										<NewRecipe />
+										<NewRecipe setOpenRecipe={setOpenRecipe} />
 									</motion.div>
 								)}
 							</AnimatePresence>

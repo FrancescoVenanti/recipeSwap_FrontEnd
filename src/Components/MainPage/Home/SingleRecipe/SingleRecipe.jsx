@@ -29,9 +29,12 @@ const variants = {
 };
 
 const SingleRecipe = ({ recipe }) => {
+	const recipeId = recipe.recipeId;
+	const recipes = useSelector((state) => state.recipes.recipes);
+	recipe = recipes.find((recipe) => recipe.recipeId === recipeId);
+	console.log("cosa sei? ", recipe);
 	const user = useSelector((state) => state.auth.user);
 	const token = useSelector((state) => state.auth.token);
-	console.log(recipe);
 	// Effect hook to update local `isFavorited` state whenever the `favorites` state changes
 
 	const dispatch = useDispatch();
@@ -45,8 +48,8 @@ const SingleRecipe = ({ recipe }) => {
 		console.log("Deleting recipe", recipeId);
 		dispatch(deleteRecipe({ token, recipeId }));
 		//reload page
-		window.location.reload();
 	};
+	console.log(recipe.user.profilePicture);
 
 	return (
 		<>

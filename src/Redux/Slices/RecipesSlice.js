@@ -87,10 +87,11 @@ export const RecipesSlice = createSlice({
 			.addCase(postRecipe.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(postRecipe.fulfilled, (state, action) => {
+			.addCase(postRecipe.fulfilled, () => {
+				//state, action
 				// Handle successful recipe post
 				// You could add the new recipe to your state here if needed
-				state.recipes.push(action.payload);
+				/* state.recipes.push(action.payload); */
 			})
 			.addCase(postRecipe.rejected, (state, action) => {
 				// Handle failed post
