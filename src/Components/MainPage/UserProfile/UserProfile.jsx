@@ -9,19 +9,17 @@ import { updateUserProfilePicture } from "../../../Redux/Slices/authSlice";
 
 const UserProfile = () => {
 	const { id } = useParams();
-	console.log(id);
 	const dispatch = useDispatch();
 	const token = useSelector((state) => state.auth.token);
 	const authUserId = useSelector((state) => state.auth.user.id);
-	console.log(authUserId);
+	const userProfilePic = useSelector((state) => state.auth.user.profilePicture);
 
 	useEffect(() => {
 		// Fetch user data based on the id parameter
 		dispatch(fetchUserWithRecipes({ userId: id, token }));
-	}, [id, dispatch, token]);
+	}, [id, dispatch, token, userProfilePic]);
 
 	const fetchedUserData = useSelector((state) => state.user.userDetails); // Adjust based on where you store fetched user data
-	console.log(fetchedUserData);
 
 	const fileInputRef = useRef(null);
 
@@ -34,27 +32,11 @@ const UserProfile = () => {
 		if (!file) return;
 
 		const formData = new FormData();
-		formData.append("image", file);
+		formData.append("image", file); // Adjust the key according to your backend expectations
 
-		try {
-			const response = await fetch(`https://localhost:7026/api/Users/updateProfilePicture/${id}`, {
-				method: "POST",
-				body: formData,
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
-
-			if (!response.ok) {
-				throw new Error("Network response was not ok");
-			}
-			const updatedUser = await response.json();
-			dispatch(updateUserProfilePicture(updatedUser.profilePic));
-			alert("Profile picture updated successfully");
-		} catch (error) {
-			console.error("Error:", error);
-			alert("Failed to upload the image");
-		}
+		// Dispatch the thunk with formData
+		dispatch(updateUserProfilePicture(formData)); // Now just passing formData directly
+		//reload everything
 	};
 
 	const defaultProfilePicture = "https://via.placeholder.com/300";

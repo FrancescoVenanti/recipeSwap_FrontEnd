@@ -1,11 +1,32 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const UPDATE_USER_PROFILE_PICTURE = "user/updateProfilePicture";
+export const updateUserProfilePicture = createAsyncThunk(
+	"user/updateUserProfilePicture",
+	async (formData, { getState, rejectWithValue }) => {
+		const { token } = getState().auth; // Extract the token from your auth state
+		const userId = getState().auth.user.id; // Assuming you store the user's ID in the auth state
+		try {
+			const response = await fetch(`https://localhost:7026/api/Users/updateProfilePicture/${userId}`, {
+				method: "POST",
+				body: formData, // Directly use formData which includes the file
+				headers: {
+					// Don't set "Content-Type": "application/json" for FormData
+					Authorization: `Bearer ${token}`,
+				},
+			});
 
-export const updateUserProfilePicture = (profilePicUrl) => ({
-	type: UPDATE_USER_PROFILE_PICTURE,
-	payload: profilePicUrl,
-});
+			if (!response.ok) {
+				throw new Error("Network response was not ok");
+			}
+
+			const updatedUser = await response.json();
+			console.log("Updated user:", updatedUser);
+			return updatedUser.profilePic; // Adjust according to what your backend actually returns
+		} catch (error) {
+			return rejectWithValue(error.message);
+		}
+	}
+);
 
 // Async thunk per la registrazione
 export const registerUser = createAsyncThunk("auth/register", async (userData, thunkAPI) => {
@@ -134,6 +155,10 @@ export const authSlice = createSlice({
 			.addCase(logoutUser.fulfilled, (state) => {
 				state.user = null;
 				state.token = null;
+			})
+			.addCase(updateUserProfilePicture.fulfilled, (state, action) => {
+				console.log("Profile picture updated:", action.payload);
+				state.user = { ...state.user, profilePicture: action.payload };
 			});
 	},
 });

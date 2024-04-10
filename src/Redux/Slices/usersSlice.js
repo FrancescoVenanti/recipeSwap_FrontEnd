@@ -8,7 +8,6 @@ export const fetchUserWithRecipes = createAsyncThunk(
 			const response = await fetchWithToken(`https://localhost:7026/api/Users/getUser/${userId}`, token);
 			const user = await response.json();
 			if (response.ok) {
-				console.log(user);
 				return user;
 			} else {
 				return rejectWithValue(user);
@@ -36,8 +35,6 @@ export const userSlice = createSlice({
 			.addCase(fetchUserWithRecipes.fulfilled, (state, action) => {
 				state.isLoading = false;
 				state.userDetails = action.payload;
-				console.log(action.payload);
-				console.log(state.userDetails);
 			})
 			.addCase(fetchUserWithRecipes.rejected, (state, action) => {
 				state.isLoading = false;

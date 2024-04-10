@@ -29,11 +29,9 @@ const variants = {
 };
 
 const SingleRecipe = ({ recipe }) => {
-	console.log(recipe.user);
 	const recipeId = recipe.recipeId;
 	const recipes = useSelector((state) => state.recipes.recipes);
 	recipe = recipes.find((recipe) => recipe.recipeId === recipeId);
-	console.log(recipe);
 	const user = useSelector((state) => state.auth.user);
 	const token = useSelector((state) => state.auth.token);
 	// Effect hook to update local `isFavorited` state whenever the `favorites` state changes

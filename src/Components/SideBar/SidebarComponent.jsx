@@ -56,6 +56,7 @@ const SidebarComponent = ({ setIsNavOpen }) => {
 	};
 
 	const user = useSelector((state) => state.auth.user);
+	const userProfilePicture = useSelector((state) => state.auth.user.profilePicture);
 
 	return (
 		<div className={`ms-2 sidebar  rounded-3 pt-3 ps-2  ${isOpen ? "sideOpen" : "sideClose"} White`}>
@@ -138,7 +139,7 @@ const SidebarComponent = ({ setIsNavOpen }) => {
 			>
 				{isOpen && <p className="m-0 fs-5">Username</p>}
 				<img
-					src={user.profilePicture == null ? userPlaceholder : user.profilePicture}
+					src={userProfilePicture == null ? userPlaceholder : user.profilePicture}
 					alt="profile"
 					className={`rounded-circle ms-auto me-2 ${isHovered ? "imgHuge" : "imgSmall"}`}
 				/>
