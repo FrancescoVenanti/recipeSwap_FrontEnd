@@ -91,13 +91,15 @@ export const authSlice = createSlice({
 	},
 	reducers: {
 		reset: (state) => {
+			console.log("Resetting state");
 			state.isLoading = false;
 			state.isError = false;
 			state.isSuccess = false;
 			state.message = "";
 		},
 		updateUserProfilePicture: (state, action) => {
-			if (state.user) state.user.profilePicture = action.payload;
+			console.log("Nuova immagine profilo:", action.payload);
+			state.user.profilePicture = action.payload;
 		},
 	},
 	extraReducers: (builder) => {

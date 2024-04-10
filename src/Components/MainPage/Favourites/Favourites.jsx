@@ -10,18 +10,20 @@ const Favourites = () => {
 	const token = useSelector((state) => state.auth.token);
 
 	useEffect(() => {
-		if (userId && token) {
-			dispatch(fetchFavorites({ userId, token }));
-		}
+		dispatch(fetchFavorites({ userId, token }));
 	}, [dispatch, userId, token]);
 
 	if (status === "loading") return <div>Loading...</div>;
+
+	// Check if any recipe meets your specific condition
+	// For example, checking if there's any recipe marked as 'isFavourite' or any other condition
+	const hasFavouriteRecipes = items.some((item) => item.recipe);
 
 	return (
 		<div className="mt-2">
 			<h1>Favourites</h1>
 			<div className="row g-2">
-				{items.length === 0 ? (
+				{!hasFavouriteRecipes ? (
 					<p>Click on the bookmark to keep all your favourite recipes safe.</p>
 				) : (
 					items.map((item) => (
