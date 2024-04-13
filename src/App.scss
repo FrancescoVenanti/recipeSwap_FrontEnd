@@ -254,10 +254,14 @@ textarea::placeholder {
 	overflow: hidden; /* Ensures the overflow text is hidden */
 	text-overflow: ellipsis; /* Adds an ellipsis to signify there's more text */
 }
+
 .recipeDescription {
-	overflow: auto;
-	max-height: 4rem;
-	padding-block: 0.5rem;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	line-clamp: 3;
+	max-height: 4.5rem; /* Adjust based on your font size and line-height */
 }
 
 .dishImage {

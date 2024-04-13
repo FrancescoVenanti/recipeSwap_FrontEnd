@@ -137,7 +137,7 @@ const SidebarComponent = ({ setIsNavOpen }) => {
 				onMouseEnter={handleHoverChange}
 				onMouseLeave={handleHoverChange}
 			>
-				{isOpen && <p className="m-0 fs-5">Username</p>}
+				{isOpen && <p className="m-0 fs-5">{user.username}</p>}
 				<img
 					src={userProfilePicture == null ? userPlaceholder : user.profilePicture}
 					alt="profile"

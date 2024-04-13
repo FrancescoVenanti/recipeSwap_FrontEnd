@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,6 +9,7 @@ import { updateUserProfilePicture } from "../../../Redux/Slices/authSlice";
 
 const UserProfile = () => {
 	const { id } = useParams();
+	const loggedUserId = useSelector((state) => state.auth.user.id);
 	const dispatch = useDispatch();
 	const token = useSelector((state) => state.auth.token);
 	const authUserId = useSelector((state) => state.auth.user.id);
@@ -20,6 +21,13 @@ const UserProfile = () => {
 	}, [id, dispatch, token, userProfilePic]);
 
 	const fetchedUserData = useSelector((state) => state.user.userDetails); // Adjust based on where you store fetched user data
+
+	console.log("asdasdasd", fetchedUserData.following, id);
+	const [isFollowed, setIsFollowed] = useState(
+		fetchedUserData.following.some((following) => following.followedUserId == id)
+	);
+
+	console.log("is followed ", isFollowed);
 
 	const fileInputRef = useRef(null);
 
@@ -39,15 +47,45 @@ const UserProfile = () => {
 		//reload everything
 	};
 
+	const followUnfollow = async () => {
+		try {
+			const response = await fetch(
+				`https://localhost:7026/api/Followers/followUnfollow/?followerId=${loggedUserId}&followedId=${id}`,
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+
+			const data = await response;
+			console.log(data);
+
+			if (!response.ok) {
+				throw new Error(data.message || "error");
+			}
+			setIsFollowed(!isFollowed);
+			console.log("Success:", data.message);
+		} catch (error) {
+			console.error("Error:", error.message);
+		}
+	};
+
 	const defaultProfilePicture = "https://via.placeholder.com/300";
 
 	return (
 		<div>
 			{/* User info and image */}
 			<div className="d-flex flex-column flex-md-row align-items-center d-md-flex">
-				<div className="mx-auto">
-					<h5 className="display-4 text-green">{fetchedUserData.username}</h5>
-					{authUserId == id && (
+				<div
+					className={`mx-auto ${
+						authUserId != id && "d-flex align-items-center flex-wrap justify-content-start "
+					}`}
+				>
+					<h5 className="display-4 text-green me-3">{fetchedUserData.username}</h5>
+					{authUserId == id ? (
 						<>
 							<p>
 								Name: {fetchedUserData.firstName} {fetchedUserData.lastName}
@@ -61,18 +99,26 @@ const UserProfile = () => {
 								Password: ******** <FontAwesomeIcon icon={faPencil} />
 							</p>
 						</>
+					) : !isFollowed ? (
+						<button className="btn btn-outline-green" onClick={followUnfollow}>
+							Follow
+						</button>
+					) : (
+						<button className="btn btn-outline-highline" onClick={followUnfollow}>
+							Stop Following
+						</button>
 					)}
 				</div>
 
 				<img
 					src={fetchedUserData.profilePicture || defaultProfilePicture}
-					className="ms-md-auto mx-auto mx-md-0 mt-3 img-fluid rounded-circle order-first order-md-last mb-3 mb-md-0 border border-3 border-green"
+					className="ms-md-auto mx-auto mx-md-0 mt-3 img-fluid rounded-circle order-last order-md-first mb-3 mb-md-0 border border-3 border-green"
 					alt="Profile"
 					onClick={authUserId == id ? handleProfilePictureClick : null}
 					style={{
 						cursor: "pointer",
-						maxWidth: "350px",
-						maxHeight: "350px",
+						maxWidth: "200px",
+						maxHeight: "200px",
 						aspectRatio: "1/1",
 						objectFit: "cover",
 					}}
