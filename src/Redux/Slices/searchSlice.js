@@ -41,6 +41,7 @@ export const searchSlice = createSlice({
 			.addCase(fetchSearchResults.pending, (state) => {
 				state.isLoading = true;
 				state.error = null;
+				state.searchResults = [];
 			})
 			.addCase(fetchSearchResults.fulfilled, (state, action) => {
 				state.isLoading = false;
@@ -49,6 +50,7 @@ export const searchSlice = createSlice({
 			.addCase(fetchSearchResults.rejected, (state, action) => {
 				state.isLoading = false;
 				state.error = action.payload || "Failed to fetch search results";
+				state.searchResults = [];
 			});
 	},
 });

@@ -14,16 +14,14 @@ const Search = () => {
 			dispatch(fetchSearchResults({ token, searchQuery: query }));
 		}
 	}, [query, dispatch, token]); // Added 'token' to the dependencies array
-
 	const searchResult = useSelector((state) => state.search.searchResults);
 	console.log(searchResult);
-
 	return (
 		<div>
 			<h1>Search Results for: {query}</h1>
 			<div className="row g-2">
 				{searchResult.map((recipe) => (
-					<SingleRecipe key={recipe.recipeId} recipe={recipe.recipe} />
+					<SingleRecipe key={recipe.recipeId} recipe={recipe} />
 				))}
 			</div>
 		</div>
