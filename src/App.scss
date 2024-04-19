@@ -177,7 +177,9 @@ textarea::placeholder {
 		transition: all 0.3s;
 	}
 }
-
+#logoKiwi {
+	margin-inline-start: -4px !important;
+}
 .sideOpen {
 	width: 300px;
 }

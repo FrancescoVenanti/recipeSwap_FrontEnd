@@ -14,14 +14,14 @@ const SideContent = () => {
 
 	// Use useSelector to access the topLiked recipes from the Redux state
 	const topLiked = useSelector((state) => state.topLiked.recipes || []);
-
+	console.log(topLiked);
 	return (
 		<div className="side-content pt-4">
 			<p className="m-0 fs-2 ">Most liked</p>
 			<p className="text-green m-0 fs-1 lead mostLikedRecipes">Recipes</p>
 
 			{topLiked.map((recipe, index) => (
-				<TopLikedRecipe key={recipe.recipeId} recipe={recipe} index={index} />
+				<TopLikedRecipe key={recipe.recipeId} recipeId={recipe.recipeId} recipe={recipe} index={index} />
 			))}
 		</div>
 	);

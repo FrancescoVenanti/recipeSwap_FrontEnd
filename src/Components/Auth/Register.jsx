@@ -15,8 +15,7 @@ const Register = () => {
 		Bio: "",
 	});
 	const dispatch = useDispatch();
-	const { isLoading, isError, message } = useSelector((state) => state.auth);
-	console.log(isLoading, isError, message);
+	const { isLoading } = useSelector((state) => state.auth); //, isError, message
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const userData = {
@@ -30,7 +29,6 @@ const Register = () => {
 			Gender: user.Gender,
 			Bio: user.Bio,
 		};
-		console.log(userData);
 		dispatch(registerUser(userData));
 	};
 

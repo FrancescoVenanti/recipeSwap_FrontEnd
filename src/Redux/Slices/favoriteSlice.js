@@ -14,7 +14,6 @@ export const fetchFavorites = createAsyncThunk("favorites/fetch", async ({ userI
 		if (!response.ok) {
 			throw new Error(data.message || "Could not fetch wishlist");
 		}
-		console.log(data);
 		return data;
 	} catch (error) {
 		return rejectWithValue(error.message);
@@ -63,7 +62,6 @@ export const favoriteSlice = createSlice({
 			})
 			.addCase(fetchFavorites.fulfilled, (state, action) => {
 				state.status = "succeeded";
-				console.log(action.payload);
 				state.items = action.payload;
 			})
 			.addCase(fetchFavorites.rejected, (state, action) => {
@@ -73,8 +71,7 @@ export const favoriteSlice = createSlice({
 			.addCase(addFavorite.pending, (state) => {
 				state.status = "loading";
 			})
-			.addCase(addFavorite.fulfilled, (state, action) => {
-				console.log(action.payload);
+			.addCase(addFavorite.fulfilled, (state) => {
 				state.status = "succeeded";
 			})
 			.addCase(addFavorite.rejected, (state, action) => {

@@ -29,12 +29,10 @@ const variants = {
 };
 
 const SingleRecipe = ({ recipe }) => {
-	console.log(recipe);
 	const recipeId = recipe.recipeId;
 	const loggedUserId = useSelector((state) => state.auth.user.id);
 	const recipes = useSelector((state) => state.recipes.recipes);
 	recipe = recipes.find((recipe) => recipe.recipeId == recipeId);
-	console.log(recipe);
 	const user = useSelector((state) => state.auth.user);
 	const token = useSelector((state) => state.auth.token);
 	// Check if the logged user is following the user who posted the recipe
@@ -42,7 +40,6 @@ const SingleRecipe = ({ recipe }) => {
 	//followedUserId is the id of the user who is being followed
 	//if the logged user is following the user who posted the recipe, isUserFollowed will be true
 	const isUserFollowed = recipe.user.following.some((following) => following.followerUserId === loggedUserId);
-	console.log(isUserFollowed);
 
 	const dispatch = useDispatch();
 	const { ref, inView } = useInView({

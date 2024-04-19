@@ -9,7 +9,6 @@ import { updateUserProfilePicture } from "../../../Redux/Slices/authSlice";
 
 const UserProfile = () => {
 	const { id } = useParams();
-	const loggedUserId = useSelector((state) => state.auth.user.id);
 	const dispatch = useDispatch();
 	const token = useSelector((state) => state.auth.token);
 	const authUserId = useSelector((state) => state.auth.user.id);
@@ -22,12 +21,9 @@ const UserProfile = () => {
 
 	const fetchedUserData = useSelector((state) => state.user.userDetails); // Adjust based on where you store fetched user data
 
-	console.log("asdasdasd", fetchedUserData.following, id);
 	const [isFollowed, setIsFollowed] = useState(
 		fetchedUserData.following.some((following) => following.followedUserId == id)
 	);
-
-	console.log("is followed ", isFollowed);
 
 	const fileInputRef = useRef(null);
 
@@ -50,7 +46,7 @@ const UserProfile = () => {
 	const followUnfollow = async () => {
 		try {
 			const response = await fetch(
-				`https://localhost:7026/api/Followers/followUnfollow/?followerId=${loggedUserId}&followedId=${id}`,
+				`https://localhost:7026/api/Followers/followUnfollow/?followerId=${authUserId}&followedId=${id}`,
 				{
 					method: "POST",
 					headers: {
@@ -61,13 +57,11 @@ const UserProfile = () => {
 			);
 
 			const data = await response;
-			console.log(data);
 
 			if (!response.ok) {
 				throw new Error(data.message || "error");
 			}
 			setIsFollowed(!isFollowed);
-			console.log("Success:", data.message);
 		} catch (error) {
 			console.error("Error:", error.message);
 		}

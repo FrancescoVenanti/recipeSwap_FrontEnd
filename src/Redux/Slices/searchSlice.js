@@ -13,7 +13,6 @@ export const fetchSearchResults = createAsyncThunk(
 			);
 			const recipes = await response.json();
 			if (response.ok) {
-				console.log("Fetched recipes:", recipes);
 				return recipes;
 			} else {
 				console.error("Failed response:", recipes);

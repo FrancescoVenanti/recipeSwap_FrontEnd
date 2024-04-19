@@ -9,13 +9,15 @@ import SidebarComponent from "./Components/SideBar/SidebarComponent";
 import Home from "./Components/MainPage/Home/Home";
 import Discover from "./Components/MainPage/Discover/Discover";
 import Favourites from "./Components/MainPage/Favourites/Favourites";
-import Messages from "./Components/MainPage/Messages/Messages";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import SideContent from "./Components/MainPage/rightSide/SideContent";
 import Search from "./Components/MainPage/Search/Search";
 import RecipeView from "./Components/MainPage/Home/RecipeView/RecipeView";
 import UserProfile from "./Components/MainPage/UserProfile/UserProfile";
 import { useSelector } from "react-redux";
+import { Toaster } from "react-hot-toast";
+import AskKiwi from "./Components/MainPage/Home/AskKiwi/AskKiwi";
+import Messages from "./Components/MainPage/Messages/Messages";
 
 function App() {
 	const constraintsRef = useRef(null);
@@ -24,25 +26,20 @@ function App() {
 	const user = useSelector((state) => state.auth.user);
 	return (
 		<Router>
+			<Toaster
+				position="top-right"
+				toastOptions={{
+					style: {
+						marginTop: "70px",
+					},
+				}}
+			/>
 			<motion.div className={`App divNoBordi ${isLogged && "container"}`} ref={constraintsRef}>
 				<div className="row">
-					<div
-						className={`${
-							isLogged ? "col flex-grow-0 p-0" : "d-none"
-						} d-flex justify-content-center align-items-center mt-0 ${isNavOpen && ""}`}
-					>
-						{user && (
-							<motion.div
-								/* drag
-							dragConstraints={constraintsRef}
-							dragElastic={0.1}
-							dragMomentum={true}
-							dragTransition={{ bounceDamping: 10 }} */
-								className="d-flex justify-content-center align-items-center "
-							>
-								<SidebarComponent setIsNavOpen={setIsNavOpen} />
-							</motion.div>
-						)}
+					<div className={`${isLogged ? "col flex-grow-0 p-0" : "d-none"} h-100`}>
+						<div className="d-flex align-items-center vh-100">
+							{user && <SidebarComponent setIsNavOpen={setIsNavOpen} />}
+						</div>
 					</div>
 					<div
 						className={`${isLogged ? "col flex-grow-1 mt-0 contentContainer rounded-4" : ""} ${
@@ -83,6 +80,14 @@ function App() {
 								element={
 									<ProtectedRoute>
 										<Favourites />
+									</ProtectedRoute>
+								}
+							/>
+							<Route
+								path="/askkiwi"
+								element={
+									<ProtectedRoute>
+										<AskKiwi />
 									</ProtectedRoute>
 								}
 							/>

@@ -5,6 +5,7 @@ import favoriteSlice from "./Slices/favoriteSlice";
 import topLikedSlice from "./Slices/topLiked";
 import searchSlice from "./Slices/searchSlice";
 import userSlice from "./Slices/usersSlice";
+import messagesSlice from "./Slices/messagesSlice";
 // Importa altri slice reducers qui
 
 const rootReducer = combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
 	topLiked: topLikedSlice,
 	search: searchSlice,
 	user: userSlice,
+	messages: messagesSlice,
 	// Aggiungi altri slice reducers qui come necessario
 });
 

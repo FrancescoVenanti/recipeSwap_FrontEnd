@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../Redux/Slices/authSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -9,17 +9,21 @@ const Login = ({ setIsLogged }) => {
 	const [pswHash, setPswHash] = useState("");
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const user = useSelector((state) => state.auth.user);
+
+	useEffect(() => {
+		if (user) {
+			setIsLogged(true);
+			navigate("/");
+		} else {
+			setIsLogged(false);
+		}
+	}, [user, navigate]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		try {
-			await dispatch(loginUser({ username, pswHash })).unwrap();
 
-			await setIsLogged(true);
-			await navigate("/");
-		} catch (e) {
-			console.log(e);
-		}
+		dispatch(loginUser({ username, pswHash }));
 	};
 
 	return (

@@ -6,9 +6,7 @@ import { fetchRecipes, postRecipe } from "../../../../Redux/Slices/RecipesSlice"
 import PropTypes from "prop-types";
 const NewRecipe = ({ setOpenRecipe }) => {
 	const token = useSelector((state) => state.auth.token);
-	console.log("token ", token);
 	const userId = useSelector((state) => state.auth.user.id);
-	console.log("user ", userId);
 	const { isLoading } = useSelector((state) => state.recipes);
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
@@ -47,7 +45,6 @@ const NewRecipe = ({ setOpenRecipe }) => {
 			formData.append("Image", image);
 		}
 
-		console.log("Submitting recipe...");
 		// Adjust the action to handle FormData
 		dispatch(postRecipe({ token, recipeData: formData }))
 			.then(() => {

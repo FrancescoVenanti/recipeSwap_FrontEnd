@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 export const updateUserProfilePicture = createAsyncThunk(
 	"user/updateUserProfilePicture",
@@ -20,7 +21,6 @@ export const updateUserProfilePicture = createAsyncThunk(
 			}
 
 			const updatedUser = await response.json();
-			console.log("Updated user:", updatedUser);
 			return updatedUser.profilePic; // Adjust according to what your backend actually returns
 		} catch (error) {
 			return rejectWithValue(error.message);
@@ -47,7 +47,6 @@ export const registerUser = createAsyncThunk("auth/register", async (userData, t
 			return thunkAPI.rejectWithValue(data);
 		}
 	} catch (e) {
-		console.log("Error", e.response.data);
 		return thunkAPI.rejectWithValue(e.response.data);
 	}
 });
@@ -112,14 +111,12 @@ export const authSlice = createSlice({
 	},
 	reducers: {
 		reset: (state) => {
-			console.log("Resetting state");
 			state.isLoading = false;
 			state.isError = false;
 			state.isSuccess = false;
 			state.message = "";
 		},
 		updateUserProfilePicture: (state, action) => {
-			console.log("Nuova immagine profilo:", action.payload);
 			state.user.profilePicture = action.payload;
 		},
 	},
@@ -131,11 +128,12 @@ export const authSlice = createSlice({
 			.addCase(registerUser.fulfilled, (state) => {
 				state.isLoading = false;
 				state.isSuccess = true;
+				toast.success("Registered successfully");
 			})
 			.addCase(registerUser.rejected, (state, action) => {
 				state.isLoading = false;
 				state.isError = true;
-				state.message = action.payload.message;
+				state.message = action.payload ? action.payload : "Registration failed";
 				state.user = null;
 			})
 			.addCase(loginUser.pending, (state) => {
@@ -146,19 +144,23 @@ export const authSlice = createSlice({
 				state.isSuccess = true;
 				state.user = action.payload; // Assumi che l'action ritorni i dettagli dell'utente
 				state.token = action.payload.token;
+				toast.success("logged in successfully");
 			})
 			.addCase(loginUser.rejected, (state, action) => {
 				state.isLoading = false;
 				state.isError = true;
-				state.message = action.payload ? action.payload : "Login fallito";
+				state.message = action.payload ? action.payload : "Login failed";
+				state.user = null;
+				toast.error("Login failed");
 			})
 			.addCase(logoutUser.fulfilled, (state) => {
 				state.user = null;
 				state.token = null;
+				toast.success("Logged out successfully");
 			})
 			.addCase(updateUserProfilePicture.fulfilled, (state, action) => {
-				console.log("Profile picture updated:", action.payload);
 				state.user = { ...state.user, profilePicture: action.payload };
+				toast.success("Profile picture updated");
 			});
 	},
 });

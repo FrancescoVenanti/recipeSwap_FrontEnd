@@ -10,12 +10,14 @@ import { faAdd, faMinus } from "@fortawesome/free-solid-svg-icons";
 import SingleRecipe from "./SingleRecipe/SingleRecipe";
 /* import AdComponent from "../../GlobalComponents/AdComponent"; */
 import FakeAdComponent from "../../GlobalComponents/FakeAdComponent";
+import { fetchUserWithRecipes } from "../../../Redux/Slices/usersSlice";
 
 const Home = () => {
 	const dispatch = useDispatch();
 
 	const [openRecipe, setOpenRecipe] = useState(false);
 	const user = useSelector((state) => state.auth.user);
+
 	const token = useSelector((state) => state.auth.token);
 	const navigate = useNavigate();
 	const containerVariants = {
@@ -35,13 +37,27 @@ const Home = () => {
 		if (user == null) {
 			navigate("/Authentication");
 		} else if (token) {
-			dispatch(fetchRecipes(token)).then((action) => {
-				if (action.type.endsWith("fulfilled")) {
-					console.log("Recipes fetched successfully");
-				}
-			});
+			dispatch(fetchRecipes(token));
 		}
 	}, [user, token, dispatch, navigate]);
+
+	useEffect(() => {
+		if (user) {
+			dispatch(fetchUserWithRecipes({ userId: user.id, token }));
+		}
+	}, [user, token, dispatch]);
+
+	// Access follower information safely using optional chaining
+	const userFollowers = useSelector((state) => state.user.userDetails?.follower);
+	const followedUserIds = userFollowers?.map((follower) => follower.followedUserId) || [];
+
+	// Filter recipes based on followed user IDs
+	const filteredRecipes = recipes.filter((recipe) => followedUserIds.includes(recipe.user.userId));
+
+	// Redirect if no recipes are available from followed users
+	if (filteredRecipes.length === 0 && recipes.length > 0) {
+		navigate("/Discover");
+	}
 
 	return (
 		<>
@@ -49,7 +65,7 @@ const Home = () => {
 				<h1 className="display-4">
 					Hello, <span className="text-green">{user.username}</span>
 				</h1>
-				<div className="row g-4  overflow-x-hidden">
+				<div className="row g-4  overflow-x-hidden pb-3">
 					<div className="col-12">
 						<div className=" p-2 rounded-2">
 							<div className="col my-2">
@@ -82,7 +98,7 @@ const Home = () => {
 							</AnimatePresence>
 						</div>
 					</div>
-					{recipes.map((recipe, index) => (
+					{filteredRecipes.map((recipe, index) => (
 						<React.Fragment key={index}>
 							<SingleRecipe key={recipe.recipeId} recipe={recipe} />
 							{/* todo forse togliere adcomponent */}
@@ -95,11 +111,6 @@ const Home = () => {
 							)}
 						</React.Fragment>
 					))}
-					<div className="col-12 my-4">
-						<div className="d-flex justify-content-center">
-							<button className="btn btn-primary">Load More</button>
-						</div>
-					</div>
 				</div>
 			</div>
 		</>

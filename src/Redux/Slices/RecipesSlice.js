@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import fetchWithToken from "../interceptor";
+import toast from "react-hot-toast";
 
 export const fetchRecipes = createAsyncThunk("recipes/fetchRecipes", async (token, { rejectWithValue }) => {
 	try {
@@ -7,7 +8,6 @@ export const fetchRecipes = createAsyncThunk("recipes/fetchRecipes", async (toke
 
 		const recipes = await response.json();
 		if (response.ok) {
-			console.log(recipes);
 			return recipes;
 		} else {
 			return rejectWithValue(recipes);
@@ -88,6 +88,7 @@ export const RecipesSlice = createSlice({
 				state.isLoading = true;
 			})
 			.addCase(postRecipe.fulfilled, () => {
+				toast.success("Recipe posted");
 				//state, action
 				// Handle successful recipe post
 				// You could add the new recipe to your state here if needed
@@ -97,6 +98,7 @@ export const RecipesSlice = createSlice({
 				// Handle failed post
 				state.isError = true;
 				state.errorMessage = action.payload;
+				toast.error("Failed to post recipe");
 			})
 			// Handling deleteRecipe async actions
 			.addCase(deleteRecipe.pending, (state) => {
@@ -106,11 +108,13 @@ export const RecipesSlice = createSlice({
 				// Handle successful recipe deletion
 				// Remove the deleted recipe from your state
 				state.recipes = state.recipes.filter((recipe) => recipe.recipeId !== action.payload);
+				toast.success("Recipe deleted");
 			})
 			.addCase(deleteRecipe.rejected, (state, action) => {
 				// Handle failed deletion
 				state.isError = true;
 				state.errorMessage = action.payload;
+				toast.error("Failed to delete recipe");
 			});
 	},
 });

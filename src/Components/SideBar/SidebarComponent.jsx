@@ -8,7 +8,8 @@ import {
 	faBars,
 	faXmark,
 	faDoorOpen,
-	faKiwiBird,
+	faMessage,
+	faRobot,
 } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom"; // Import Link
@@ -16,6 +17,7 @@ import { logoutUser } from "../../Redux/Slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ThemeToggle from "../GlobalComponents/ThemeToggle";
 import userPlaceholder from "../../assets/userPlaceholder.png";
+import LogoSvg from "../GlobalComponents/LogoSvg";
 
 // eslint-disable-next-line react/prop-types
 const SidebarComponent = ({ setIsNavOpen }) => {
@@ -52,6 +54,7 @@ const SidebarComponent = ({ setIsNavOpen }) => {
 			event.preventDefault();
 			// Navigate to the search page with the query
 			navigate(`/search/${searchQuery}`);
+			setIsOpen(false);
 		}
 	};
 
@@ -59,10 +62,10 @@ const SidebarComponent = ({ setIsNavOpen }) => {
 	const userProfilePicture = useSelector((state) => state.auth.user.profilePicture);
 
 	return (
-		<div className={`ms-2 sidebar  rounded-3 pt-3 ps-2  ${isOpen ? "sideOpen" : "sideClose"} White`}>
-			<div className="pb-3 d-flex flex-column justify-content-center align-items-center mb-2">
+		<div className={`ms-2 sidebar   rounded-3 ps-2  ${isOpen ? "sideOpen" : "sideClose"} White`}>
+			<div className="py-1 d-flex flex-column justify-content-center align-items-center ">
 				{isOpen ? (
-					<a className="fs-3 p-3 w-100 " onClick={handleToggleSidebar}>
+					<a className="fs-4 p-3 w-100 " onClick={handleToggleSidebar}>
 						<motion.div
 							animate={isOpen ? "open" : "closed"}
 							variants={variants}
@@ -72,7 +75,7 @@ const SidebarComponent = ({ setIsNavOpen }) => {
 						</motion.div>
 					</a>
 				) : (
-					<a className="fs-3 p-3 w-100" onClick={handleToggleSidebar} aria-label="Toggle search">
+					<a className="fs-4 p-3 w-100" onClick={handleToggleSidebar} aria-label="Toggle search">
 						<motion.div
 							animate={isOpen ? "open" : "closed"}
 							variants={variants}
@@ -84,7 +87,7 @@ const SidebarComponent = ({ setIsNavOpen }) => {
 				)}
 
 				{isOpen ? (
-					<a className="fs-3 p-3 w-100 d-flex align-items-center">
+					<a className="fs-4 p-3 w-100 d-flex align-items-center">
 						<FontAwesomeIcon className="me-2" icon={faSearch} />
 						<input
 							type="text"
@@ -96,29 +99,41 @@ const SidebarComponent = ({ setIsNavOpen }) => {
 						/>
 					</a>
 				) : (
-					<a className="fs-3 p-3 w-100 " onClick={handleToggleSidebar} aria-label="Toggle search">
+					<a className="fs-4 p-3 w-100 " onClick={handleToggleSidebar} aria-label="Toggle search">
 						<FontAwesomeIcon icon={faSearch} />
 					</a>
 				)}
 
 				{/* Convert these to Link */}
-				<Link to="/" className="fs-3 p-3 w-100">
-					<FontAwesomeIcon className={`me-3 ${isOpen ? "iconSide" : ""}`} icon={faHome} />
-					{isOpen && "Home"}
+				<Link to="/" className="fs-4 p-3 w-100">
+					<div
+						id="logoKiwi"
+						className={`d-flex align-items-center justify-content-start ${isOpen ? "iconSide" : ""}`}
+						icon={faHome}
+					>
+						{/* <img id="logoKiwi" src={logo} alt="logo" className={`me-2 `} /> */}
+						<LogoSvg />
+						<span className="ms-2">{isOpen && "Home"}</span>
+					</div>
 				</Link>
-				<Link to="/discover" className="fs-3 p-3 w-100">
+				<Link to="/discover" className="fs-4 p-3 w-100">
 					<FontAwesomeIcon className={`me-3 ${isOpen ? "iconSide" : ""}`} icon={faUtensils} />
 					{isOpen && "Discover"}
 				</Link>
-				<Link to="/favourites" className="fs-3 p-3 w-100">
+				<Link to="/favourites" className="fs-4 p-3 w-100">
 					<FontAwesomeIcon className={`me-3 ${isOpen ? "iconSide" : ""}`} icon={faHeart} />
 					{isOpen && "Favourites"}
 				</Link>
-				<Link to="/messages" className="fs-3 p-3 w-100">
-					<FontAwesomeIcon className={`me-3 ${isOpen ? "iconSide" : ""}`} icon={faKiwiBird} />
+				<Link to="/messages" className="fs-4 p-3 w-100">
+					<FontAwesomeIcon className={`me-3 ${isOpen ? "iconSide" : ""}`} icon={faMessage} />
+					{isOpen && "messages"}
+				</Link>
+				<Link to="/askkiwi" className="fs-4 p-3 w-100">
+					<FontAwesomeIcon className={`me-3 ${isOpen ? "iconSide" : ""}`} icon={faRobot} />
 					{isOpen && "Ask Kiwi"}
 				</Link>
-				<a className="fs-3 p-3 w-100">
+				<ThemeToggle isOpen={isOpen} />
+				<a className="fs-4 p-3 w-100">
 					<FontAwesomeIcon
 						className={`me-3 ${isOpen ? "iconSide" : ""}`}
 						icon={faDoorOpen}
@@ -126,14 +141,12 @@ const SidebarComponent = ({ setIsNavOpen }) => {
 					/>
 					{isOpen && "Logout"}
 				</a>
-
-				<ThemeToggle isOpen={isOpen} />
 			</div>
 
 			<Link
 				//
 				to={`/User/${user.id}`}
-				className="p-2 w-100 mb-3 ms-2 d-flex align-items-center sideProfile"
+				className="p-2 w-100 mb-1 ms-auto d-flex align-items-center sideProfile"
 				onMouseEnter={handleHoverChange}
 				onMouseLeave={handleHoverChange}
 			>

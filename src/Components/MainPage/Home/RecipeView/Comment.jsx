@@ -34,7 +34,6 @@ const Comment = ({ userId, recipeId }) => {
 
 			// Handle success response here. For example, clear the form or provide user feedback.
 			setText("");
-			console.log("Comment posted successfully", data); // It might be helpful to log the response data for debugging or user feedback
 		} catch (error) {
 			setError(error.message);
 		} finally {

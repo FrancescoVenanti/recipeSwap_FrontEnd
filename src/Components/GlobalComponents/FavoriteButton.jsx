@@ -20,7 +20,6 @@ const FavoriteButton = ({ recipe }) => {
 	//todo migliorare
 	//toppi dispatch ma per ora e' lunico modo che ho per far aggiornare i component al momento giusto
 	const handleFavorites = async () => {
-		console.log("handleFavorites called");
 		dispatch(addFavorite({ userId, ProductId, token }));
 		await dispatch(fetchFavorites({ userId, token }));
 		if (isFavorited) {

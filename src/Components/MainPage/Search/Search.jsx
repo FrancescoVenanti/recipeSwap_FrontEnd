@@ -15,7 +15,6 @@ const Search = () => {
 		}
 	}, [query, dispatch, token]); // Added 'token' to the dependencies array
 	const searchResult = useSelector((state) => state.search.searchResults);
-	console.log(searchResult);
 	return (
 		<div>
 			<h1>Search Results for: {query}</h1>

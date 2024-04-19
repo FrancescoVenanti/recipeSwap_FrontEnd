@@ -40,7 +40,6 @@ const Likes = ({ recipe }) => {
 				throw new Error(data.message || "Could not toggle like");
 			}
 			setIsLiked(!isLiked);
-			console.log("Success:", data.message);
 			if (data.message === "Like rimosso.") {
 				setTotLikes(totLikes - 1);
 			} else {
