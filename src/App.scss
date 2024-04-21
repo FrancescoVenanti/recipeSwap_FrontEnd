@@ -382,3 +382,7 @@ pre {
 .heart-pop {
 	animation: pop 0.4s ease; /* Adjust timing to make the animation faster or slower */
 }
+.scrollable {
+	overflow-y: auto;
+	max-height: 90vh;
+}

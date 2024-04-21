@@ -1,6 +1,15 @@
 import PropTypes from "prop-types";
 
-const ConversationList = ({ conversations, setActiveConversation, loading, error, userId }) => {
+const ConversationList = ({
+	conversations,
+	setActiveConversation,
+	loading,
+	error,
+	userId,
+	setIsMessageListVisible,
+	setIsModalVisible,
+	closeActiveConversation,
+}) => {
 	{
 		error && console.log(error);
 	}
@@ -11,9 +20,13 @@ const ConversationList = ({ conversations, setActiveConversation, loading, error
 				{conversations.map(({ key, lastMessage }) => (
 					<div
 						key={key}
-						onClick={() => setActiveConversation(key)}
+						onClick={() => {
+							setActiveConversation(key);
+							setIsMessageListVisible(false);
+							setIsModalVisible(false);
+						}}
 						style={{ cursor: "pointer" }}
-						className="border p-1 ps-2 rounded-2 mb-2 d-flex align-items-center"
+						className="border p-1 ps-2 rounded-2 mb-2 d-flex align-items-center White"
 					>
 						<img
 							src={
@@ -39,6 +52,17 @@ const ConversationList = ({ conversations, setActiveConversation, loading, error
 					</div>
 				))}
 			</div>
+			<div className="mt-3 col-10 offset-1">
+				<button
+					className="btn btn-outline-green"
+					onClick={() => {
+						setIsModalVisible(true);
+						closeActiveConversation();
+					}}
+				>
+					Start a new conversation
+				</button>
+			</div>
 		</>
 	);
 };
@@ -48,7 +72,10 @@ export default ConversationList;
 ConversationList.propTypes = {
 	conversations: PropTypes.array,
 	setActiveConversation: PropTypes.func,
+	setIsMessageListVisible: PropTypes.func,
 	loading: PropTypes.bool,
 	error: PropTypes.string,
 	userId: PropTypes.number,
+	setIsModalVisible: PropTypes.func,
+	closeActiveConversation: PropTypes.func,
 };

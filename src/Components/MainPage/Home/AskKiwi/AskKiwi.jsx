@@ -43,7 +43,7 @@ const AskKiwi = () => {
 								<div className="p-3 bg-green text-white rounded">{pair.question}</div>
 							</div>
 							<div className="col-10 d-flex justify-content-start">
-								<div className=" p-3 bg-white rounded">
+								<div className=" p-3 White rounded">
 									<pre>{pair.answer}</pre>
 								</div>
 							</div>

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 
-const ActiveConversation = ({ activeConversation, userId, closeConversation }) => {
+const ActiveConversation = ({ activeConversation, userId, closeConversation, setIsMessageListVisible }) => {
 	const [messageText, setMessageText] = useState("");
 	const dispatch = useDispatch();
 	const token = useSelector((state) => state.auth.token);
@@ -38,7 +38,7 @@ const ActiveConversation = ({ activeConversation, userId, closeConversation }) =
 
 	return (
 		<div>
-			<div className="d-flex align-items-center mb-2 border-bottom border-dark">
+			<div className="d-flex align-items-center mb-2 p-2 rounded-2 border-bottom border-dark sticky-top White">
 				<img
 					src={
 						activeConversation[0].senderUserId === userId
@@ -54,7 +54,13 @@ const ActiveConversation = ({ activeConversation, userId, closeConversation }) =
 						? activeConversation[0].receiverUser.username
 						: activeConversation[0].senderUser.username}
 				</h2>
-				<button onClick={closeConversation} className="ms-auto btn btn-transparent">
+				<button
+					onClick={() => {
+						closeConversation();
+						setIsMessageListVisible(true);
+					}}
+					className="btn btn-outline-highline rounded-cirlce ms-auto"
+				>
 					<FontAwesomeIcon icon={faTimes} />
 				</button>
 			</div>
@@ -69,7 +75,7 @@ const ActiveConversation = ({ activeConversation, userId, closeConversation }) =
 					<div className="col-auto">
 						<p
 							className={`m-0 rounded-pill py-2 px-4 ${
-								msg.senderUserId === userId ? "bg-green text-white" : "bg-light"
+								msg.senderUserId === userId ? "bg-green text-white" : "White"
 							}`}
 						>
 							{msg.messageContent}
@@ -98,6 +104,7 @@ ActiveConversation.propTypes = {
 	activeConversation: PropTypes.array,
 	userId: PropTypes.number.isRequired,
 	closeConversation: PropTypes.func.isRequired,
+	setIsMessageListVisible: PropTypes.func.isRequired,
 };
 
 export default ActiveConversation;
