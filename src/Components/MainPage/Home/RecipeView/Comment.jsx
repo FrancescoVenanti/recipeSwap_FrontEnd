@@ -1,12 +1,15 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import fetchWithToken from "../../../../Redux/interceptor";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRecipes } from "../../../../Redux/Slices/RecipesSlice";
 
 const Comment = ({ userId, recipeId }) => {
 	const [text, setText] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
-	const token = localStorage.getItem("token");
+	const token = useSelector((state) => state.auth.token);
+	const dispatch = useDispatch();
 
 	const postComment = async () => {
 		setIsLoading(true);
@@ -44,7 +47,7 @@ const Comment = ({ userId, recipeId }) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		postComment();
-		window.location.reload();
+		dispatch(fetchRecipes(token));
 	};
 
 	return (

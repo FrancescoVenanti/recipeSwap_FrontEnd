@@ -53,6 +53,6 @@ const TopLikedRecipe = ({ recipeId, index }) => {
 export default TopLikedRecipe;
 
 TopLikedRecipe.propTypes = {
-	recipeId: PropTypes.string.isRequired,
+	recipeId: PropTypes.number.isRequired,
 	index: PropTypes.number.isRequired,
 };

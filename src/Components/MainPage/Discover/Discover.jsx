@@ -34,7 +34,7 @@ const Discover = () => {
 	}, [recipes, orderRecipes]);
 
 	return (
-		<>
+		<div className="mb-2">
 			<div className="h-100">
 				<div className="d-flex justify-content-center flex-column align-items-start my-3">
 					<h1 className="display-5">
@@ -58,14 +58,9 @@ const Discover = () => {
 							)}
 						</React.Fragment>
 					))}
-					<div className="col-12 my-4">
-						<div className="d-flex justify-content-center">
-							<button className="btn btn-primary">Load More</button>
-						</div>
-					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
 

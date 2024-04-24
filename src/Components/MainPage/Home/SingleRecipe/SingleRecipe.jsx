@@ -61,7 +61,7 @@ const SingleRecipe = ({ recipe }) => {
 					variants={variants}
 					initial="offscreen"
 					animate={inView ? "onscreen" : "offscreen"}
-					className="col-12"
+					className="col-12 pb-2"
 				>
 					{/* Image Container - Make it full width on small screens and automatically adjust on larger screens */}
 					<div className=" ms-1 d-flex align-items-center mb-1">
@@ -104,33 +104,34 @@ const SingleRecipe = ({ recipe }) => {
 						<div className="White p-2 rounded-2 shadow ms-md-2 mt-2 mt-md-0 w-100 h-100  d-flex flex-column  overflow-hidden">
 							<div className="d-flex justify-content-between align-items-center mh-30">
 								<h2 className="no-line-break">{recipe.title}</h2>
-								{recipe.user.userId == user.id && (
-									<div className="dropdown">
-										<button
-											className="White border-0 fs-4 ms-auto dropdown-toggle btn-no-caret"
-											id="dropdownMenuButton"
-											data-bs-toggle="dropdown"
-											aria-expanded="false"
-										>
-											<FontAwesomeIcon icon={faEllipsisVertical} />
-										</button>
-										<ul className="dropdown-menu light" aria-labelledby="dropdownMenuButton">
-											<li className="px-2 rounded-2">
-												<button className="dropdown-item light rounded-1" disabled>
-													Modify
-												</button>
-											</li>
-											<li className="px-2 rounded-1">
-												<button
-													className="dropdown-item light rounded-1"
-													onClick={handleDelete}
-												>
-													Delete
-												</button>
-											</li>
-										</ul>
-									</div>
-								)}
+								{recipe.user.userId == user.id ||
+									(user.role == "admin" && (
+										<div className="dropdown">
+											<button
+												className="White border-0 fs-4 ms-auto dropdown-toggle btn-no-caret"
+												id="dropdownMenuButton"
+												data-bs-toggle="dropdown"
+												aria-expanded="false"
+											>
+												<FontAwesomeIcon icon={faEllipsisVertical} />
+											</button>
+											<ul className="dropdown-menu light" aria-labelledby="dropdownMenuButton">
+												<li className="px-2 rounded-2">
+													<button className="dropdown-item light rounded-1" disabled>
+														Modify
+													</button>
+												</li>
+												<li className="px-2 rounded-1">
+													<button
+														className="dropdown-item light rounded-1"
+														onClick={handleDelete}
+													>
+														Delete
+													</button>
+												</li>
+											</ul>
+										</div>
+									))}
 							</div>
 							<div className="">
 								<p className="m-0 recipeDescription">{recipe.description}</p>

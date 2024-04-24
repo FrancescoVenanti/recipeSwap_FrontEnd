@@ -17,6 +17,7 @@ const Home = () => {
 
 	const [openRecipe, setOpenRecipe] = useState(false);
 	const user = useSelector((state) => state.auth.user);
+	console.log(user);
 
 	const token = useSelector((state) => state.auth.token);
 	const navigate = useNavigate();

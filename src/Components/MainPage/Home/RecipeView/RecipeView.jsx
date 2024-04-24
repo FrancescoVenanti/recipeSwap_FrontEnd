@@ -8,7 +8,8 @@ import { fetchRecipes } from "../../../../Redux/Slices/RecipesSlice";
 import Likes from "../../../GlobalComponents/Likes";
 import FavoriteButton from "../../../GlobalComponents/FavoriteButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import fetchWithToken from "../../../../Redux/interceptor";
 
 const RecipeView = () => {
 	const allRecipes = useSelector((state) => state.recipes.recipes);
@@ -21,6 +22,21 @@ const RecipeView = () => {
 	useEffect(() => {
 		dispatch(fetchRecipes(token));
 	}, [dispatch, token]);
+
+	const deleteComment = async (commentId) => {
+		try {
+			const response = await fetchWithToken(`https://localhost:7026/api/comments/${commentId}`, token, {
+				method: "DELETE",
+			});
+			if (!response.ok) {
+				throw new Error("Failed to delete comment");
+			}
+		} catch (error) {
+			console.log("Error:", error);
+		} finally {
+			dispatch(fetchRecipes(token));
+		}
+	};
 
 	return (
 		<div className="text-center">
@@ -46,6 +62,7 @@ const RecipeView = () => {
 					src={recipe.image == "" ? imgPlaceholder : recipe.image}
 					alt={recipe.title}
 					className="img-fluid w-100"
+					style={{ aspectRatio: "16/9", objectFit: "cover" }}
 					whileHover={{ scale: 1.5 }} // Adjust scale value as needed
 					transition={{ duration: 0.3 }}
 				/>
@@ -81,13 +98,31 @@ const RecipeView = () => {
 											style={{ width: "30px" }}
 										/>
 										<p className="text-beige m-0 ms-2 ">{comment.username}</p>
+										{user.role == "admin" && (
+											<FontAwesomeIcon
+												className="text-highlight ms-2"
+												icon={faTrash}
+												onClick={() => deleteComment(comment.commentId)}
+											/>
+										)}
 									</div>
 								) : (
 									<div className="d-flex align-items-center justify-content-end">
+										{user.role == "admin" && (
+											<FontAwesomeIcon
+												className="text-highlight me-2"
+												icon={faTrash}
+												onClick={() => deleteComment(comment.commentId)}
+											/>
+										)}
 										<p className="text-beige m-0 me-2">You</p>
 									</div>
 								)}
-								<div className={`d-flex  ${user.id == comment.userId && "justify-content-end"}`}>
+								<div
+									className={`d-flex  ${
+										user.id == comment.userId && "justify-content-end align-items-center"
+									}`}
+								>
 									<p
 										className={`p-2 m-0 rounded-2 White w-100 ${
 											user.id == comment.userId && " text-end"
